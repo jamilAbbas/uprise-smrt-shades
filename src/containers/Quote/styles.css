@@ -1,0 +1,21 @@
+.shadesbutton {
+  width: 100%;
+  text-align: center;
+  margin-top: 2rem;
+}
+.quotesform {
+  width: 24rem;
+  background: whitesmoke;
+  height: auto;
+  border: 1px solid grey;
+  padding: 2rem;
+  border-radius: 10px;
+}
+.propAddress {
+  padding: 2rem;
+  height: 13rem;
+  border-radius: 10px;
+  width: 28rem;
+  border: 1px solid grey;
+  background: whitesmoke;
+}
