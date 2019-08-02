@@ -11,7 +11,7 @@ import App from "./App";
 ReactDOM.render(
   <Router>
     <Navigation />
-    <Route exact path="/" component={App} />
+    <Route exact path="/" component={Login} />
     <Route exact path="/login" component={Login} />
     <Route exact path="/dashboard" component={Dashboard} />
     <Route exact path="/create-quote" component={Quote} />
