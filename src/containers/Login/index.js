@@ -5,10 +5,6 @@ import {
   Input,
   Button,
   Checkbox,
-  Row,
-  Col,
-  Layout,
-  PageHeader
 } from "antd";
 import "./styles.css";
 class NormalLoginForm extends React.Component {
@@ -22,7 +18,7 @@ class NormalLoginForm extends React.Component {
     });
   };
 
-  render() {
+  render () {
     const { getFieldDecorator } = this.props.form;
     return (
       <div className="loginWrapper">

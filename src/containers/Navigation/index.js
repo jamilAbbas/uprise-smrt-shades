@@ -9,7 +9,7 @@ const Navigation = () => (
   <Layout className="layout">
     <Header>
       <Link to="/">
-        <img className="logo" alt="logo" />
+        <img className="logo" src={require('../../asserts/logo.png')} style={{ height: 63 }} alt="logo" />
       </Link>
 
       <Menu
