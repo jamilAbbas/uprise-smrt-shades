@@ -1,57 +1,13 @@
 import React from "react";
-import { Row, Col, Icon, Table, Divider, Tag, Button } from "antd";
+import { connect } from 'react-redux';
+import { Row, Col, Icon, Table, Tag, Button } from "antd";
+
+import { columns } from './tableColumns'
 import "./styles.css";
+
 class Dashboard extends React.Component {
   render() {
-    const columns = [
-      {
-        title: "Quote ID",
-        dataIndex: "name",
-        key: "name",
-        render: text => <a href="javascript:;">{text}</a>
-      },
-      {
-        title: "Title",
-        dataIndex: "age",
-        key: "age"
-      },
-      {
-        title: "Created By",
-        dataIndex: "address",
-        key: "address"
-      },
-      {
-        title: "Created",
-        key: "tags",
-        dataIndex: "createdAt"
-      },
-      {
-        title: "Last Updated",
-        key: "tags",
-        dataIndex: "updatedAt"
-      },
-      {
-        title: "MSRP",
-        key: "tags",
-        dataIndex: "msrp"
-      },
-      {
-        title: "Payment Status",
-        key: "tags",
-        dataIndex: "status"
-      },
-      {
-        title: "Acions",
-        key: "action",
-        render: (text, record) => (
-          <span>
-            <a href="javascript:;">Invite {record.name}</a>
-            <Divider type="vertical" />
-            <a href="javascript:;">Delete</a>
-          </span>
-        )
-      }
-    ];
+    const { dashboard } = this.props;
     return (
       <div className="dashboardContainer">
         <Row>
@@ -75,7 +31,11 @@ class Dashboard extends React.Component {
               </Button>
             </div>
             <h1>Active Quotes</h1>
-            <Table columns={columns} />
+            <Table
+              columns={columns}
+              pagination={{ pageSize: 5 }}
+              dataSource={[...dashboard.activeQoutes]}
+            />
           </Col>
           <Col span={1} />
         </Row>
@@ -100,4 +60,17 @@ class Dashboard extends React.Component {
   }
 }
 
-export default Dashboard;
+const mapStateToProps = state => ({
+  dashboard: state.dashboard,
+});
+
+const mapDispatchToProps = dispatch => {
+  return {
+    dispatch
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Dashboard);
