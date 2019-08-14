@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from 'react-redux';
 import Login from "../src/containers/Login";
+import SignUp from "../src/containers/SignUp";
 import Quote from "../src/containers/Quote";
 import Dashboard from "../src/containers/Dashboard";
 import Navigation from "../src/containers/Navigation";
@@ -19,6 +20,7 @@ ReactDOM.render(
     <Router>
       <Navigation />
       <Route exact path="/" component={Login} />
+      <Route exact path="/sign-up" component={SignUp} />
       <Route exact path="/login" component={Login} />
       <Route exact path="/dashboard" component={Dashboard} />
       <Route exact path="/create-quote" component={Quote} />

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   Form,
   Icon,
@@ -6,6 +7,7 @@ import {
   Button,
   Checkbox,
 } from "antd";
+
 import "./styles.css";
 class NormalLoginForm extends React.Component {
   handleSubmit = e => {
@@ -18,7 +20,7 @@ class NormalLoginForm extends React.Component {
     });
   };
 
-  render () {
+  render() {
     const { getFieldDecorator } = this.props.form;
     return (
       <div className="loginWrapper">
@@ -72,7 +74,7 @@ class NormalLoginForm extends React.Component {
                 Log in
               </Button>
               <br />
-              Or <a href="">register now!</a>
+              Or <Link to="/sign-up"><a href="">register now!</a></Link>
             </Form.Item>
           </Form>
         </div>
