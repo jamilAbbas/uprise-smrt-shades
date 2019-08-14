@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { connect } from 'react-redux';
 import {
   Form,
   Icon,
@@ -9,12 +10,14 @@ import {
 } from "antd";
 
 import "./styles.css";
+import * as actions from '../../actions/auth-actions';
+
 class NormalLoginForm extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log("Received values of form: ", values);
+        this.props.login(values);
         this.props.history.push("dashboard");
       }
     });
@@ -86,4 +89,17 @@ class NormalLoginForm extends React.Component {
 const WrappedNormalLoginForm = Form.create({ name: "normal_login" })(
   NormalLoginForm
 );
-export default WrappedNormalLoginForm;
+const mapStateToProps = state => ({
+
+});
+
+const mapDispatchtoProps = dispatch => {
+  return {
+    login: values => dispatch(actions.loginRequest(values))
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchtoProps
+)(WrappedNormalLoginForm);
