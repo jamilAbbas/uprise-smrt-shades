@@ -1,17 +1,19 @@
 import React from "react";
+import { connect } from 'react-redux';
 import {
   Row,
   Col,
-  Icon,
   Table,
-  Divider,
-  Tag,
   Button,
   Modal,
   Form,
-  Input
+  Input,
 } from "antd";
+
+import * as actions from '../../actions/create-qoute';
+import { columns } from './tableColumns';
 import "./styles.css";
+
 
 class Quote extends React.Component {
   state = {
@@ -21,59 +23,48 @@ class Quote extends React.Component {
     this.setState({ modal2Visible });
   }
 
+  getFields() {
+    const labels = ["Type", "Room Name", "Shade Name", "Fabric", "Width", "Height", "MSRP"]
+    const { getFieldDecorator } = this.props.form;
+    const children = [];
+    for (let i = 0; i < labels.length; i++) {
+      children.push(
+        <Col span={8} key={i} style={{ display: 'block' }}>
+          <Form.Item label={labels[i]}>
+            {getFieldDecorator(labels[i].trim().toLowerCase(), {
+              rules: [
+                {
+                  required: true,
+                  message: 'Please enter value!',
+                },
+              ],
+            })(<Input placeholder="Enter value" />)}
+          </Form.Item>
+        </Col>,
+      );
+    }
+    return children;
+  }
+
+  handleSubmit = e => {
+    e.preventDefault();
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        this.props.form.resetFields();
+        this.setModal2Visible(false);
+        this.props.addQoute(values);
+      }
+    });
+  };
+
+  handleReset = () => {
+    this.props.form.resetFields();
+  };
+
   render() {
-    const { visible, onCancel, onCreate, form } = this.props;
+    const { data, form } = this.props;
     const { getFieldDecorator } = form;
 
-    const columns = [
-      {
-        title: "Select",
-        dataIndex: "name",
-        key: "name",
-        render: text => <a href="javascript:;">{text}</a>
-      },
-      {
-        title: "Room Name",
-        dataIndex: "age",
-        key: "age"
-      },
-      {
-        title: "Shade Name",
-        dataIndex: "address",
-        key: "address"
-      },
-      {
-        title: "Fabric",
-        key: "tags",
-        dataIndex: "tags"
-      },
-      {
-        title: "Width",
-        key: "tags",
-        dataIndex: "tags"
-      },
-      {
-        title: "Height",
-        key: "tags",
-        dataIndex: "tags"
-      },
-      {
-        title: "MSRP",
-        key: "tags",
-        dataIndex: "tags"
-      },
-      {
-        title: "Acions",
-        key: "action",
-        render: (text, record) => (
-          <span>
-            <a href="javascript:;">Invite {record.name}</a>
-            <Divider type="vertical" />
-            <a href="javascript:;">Delete</a>
-          </span>
-        )
-      }
-    ];
     return (
       <div className="dashboardContainer">
         <Row>
@@ -84,7 +75,7 @@ class Quote extends React.Component {
                   {getFieldDecorator("title", {
                     rules: [
                       {
-                        required: true,
+                        required: false,
                         message: "Please input the title of collection!"
                       }
                     ]
@@ -180,11 +171,13 @@ class Quote extends React.Component {
             </div>
 
             <Table
-              columns={columns}
               bordered
-              style={{ textAlign: "center", fontWeight: "600" }}
+              columns={columns}
               title={() => "Shades"}
               footer={() => "Footer"}
+              pagination={{ pageSize: 5 }}
+              dataSource={data && [...data.current] || []}
+              style={{ textAlign: "center", fontWeight: "600" }}
             />
           </Col>
           <Col span={1} />
@@ -205,20 +198,45 @@ class Quote extends React.Component {
           <Col span={1} />
         </Row>
         <Modal
-          title="Vertically centered modal dialog"
           centered
+          title="Create Qoutes"
           visible={this.state.modal2Visible}
+          footer={null}
           onOk={() => this.setModal2Visible(false)}
           onCancel={() => this.setModal2Visible(false)}
         >
-          <p>some contents...</p>
-          <p>some contents...</p>
-          <p>some contents...</p>
+          <Form className="ant-advanced-search-form" onSubmit={this.handleSubmit}>
+            <Row gutter={24}>{this.getFields()}</Row>
+            <Row>
+              <Col span={24} style={{ textAlign: 'right' }}>
+                <Button type="primary" htmlType="submit">
+                  Create
+                </Button>
+                <Button style={{ marginLeft: 8 }} onClick={this.handleReset}>
+                  Clear
+                </Button>
+              </Col>
+            </Row>
+          </Form>
         </Modal>
       </div>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  data: state.current,
+});
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addQoute: values => dispatch(actions.createQoute(values))
+  }
+}
+
 const WrappedQuoteForm = Form.create({ name: "quote_form" })(Quote);
 
-export default WrappedQuoteForm;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(WrappedQuoteForm);

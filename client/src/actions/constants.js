@@ -1,0 +1,2 @@
+export const CREATC_QOUTE = 'CREATE_QOUTE';
+export const DELETE_QOUTE = 'DELETE_QOUTE';
