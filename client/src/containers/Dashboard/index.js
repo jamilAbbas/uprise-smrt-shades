@@ -23,22 +23,22 @@ class Dashboard extends React.Component {
       {
         title: "Created",
         key: "tags",
-        dataIndex: "tags"
+        dataIndex: "createdAt"
       },
       {
         title: "Last Updated",
         key: "tags",
-        dataIndex: "tags"
+        dataIndex: "updatedAt"
       },
       {
         title: "MSRP",
         key: "tags",
-        dataIndex: "tags"
+        dataIndex: "msrp"
       },
       {
         title: "Payment Status",
         key: "tags",
-        dataIndex: "tags"
+        dataIndex: "status"
       },
       {
         title: "Acions",

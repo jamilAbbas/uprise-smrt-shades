@@ -8,9 +8,7 @@ import mySaga from '../sagas/index';
 const sagaMiddleware = createSagaMiddleware()
 
 export const store = createStore(
-    combineReducers({
-        state: reducers
-    }),
+    reducers,
     // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
     applyMiddleware(sagaMiddleware)
 );
