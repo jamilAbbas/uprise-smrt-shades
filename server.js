@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //User Routes
-app.use("/api/users", users);
+app.use("/users", users);
 
 //DB config
 const db = require("./config/keys").mongoURI;
