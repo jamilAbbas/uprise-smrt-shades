@@ -26,7 +26,6 @@ mongoose
   .connect(db, { useNewUrlParser: true })
   .then(() => console.log("Connected to db"))
   .catch(err => console.log(err));
-app.get("/", (req, res) => res.send("Hello World!"));
 
 if (process.env.NODE_ENV === "production") {
   // Set static folder
