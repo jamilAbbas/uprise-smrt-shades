@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const { Header } = Layout;
 
-const Navigation = () => (
+const Navigation = (props) => (
   <Layout className="layout">
     <Header>
       <Link to="/">
@@ -22,18 +22,26 @@ const Navigation = () => (
           fontWeight: "600"
         }}
       >
+        {JSON.parse(localStorage.getItem('user')) !== null &&
         <Link to="/dashboard" style={{ marginLeft: "1rem" }}>
           Dashboard
-        </Link>
+        </Link>}
+        {JSON.parse(localStorage.getItem('user')) !== null &&
         <Link to="/create-quote" style={{ marginLeft: "1rem" }}>
           Create A Quote
-        </Link>
-        {/* <Link to="/register" style={{ marginLeft: "1rem" }}>
-          Register
-        </Link> */}
+        </Link>}
+
+        {JSON.parse(localStorage.getItem('user')) !== null &&
+        <Link onClick={() => {
+          localStorage.clear();
+          window.location.href = "/"
+        }} style={{ marginLeft: "1rem" }}>
+          Logout
+        </Link>}
+        {JSON.parse(localStorage.getItem('user')) === null &&
         <Link to="/login" style={{ marginLeft: "1rem" }}>
           Login
-        </Link>
+        </Link>}
       </Menu>
     </Header>
     {/* <Footer style={{ textAlign: "center" }}>Designed by j@mil</Footer> */}

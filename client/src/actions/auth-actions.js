@@ -1,9 +1,10 @@
 import * as constants from './constants';
 
-export function loginRequest(values) {
+export function loginRequest(values, history) {
     return {
         type: constants.USER_LOGIN_REQUEST,
-        values
+        values,
+        history
     }
 }
 

@@ -11,10 +11,9 @@ class NormalLoginForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log("---login fiels", values);
-        
-        this.props.login(values);
-        this.props.history.push("dashboard");
+        this.props.login(
+          values, this.props.history
+          )
       }
     });
   };
@@ -92,7 +91,7 @@ const mapStateToProps = state => ({});
 
 const mapDispatchtoProps = dispatch => {
   return {
-    login: values => dispatch(actions.loginRequest(values))
+    login: (values, history) => dispatch(actions.loginRequest(values, history))
   };
 };
 

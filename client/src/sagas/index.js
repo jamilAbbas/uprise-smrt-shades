@@ -1,5 +1,6 @@
-import { put, takeLatest, all } from "redux-saga/effects";
+import { put, call, takeLatest, all } from "redux-saga/effects";
 import { notification, message } from "antd";
+
 import axios from "axios";
 
 import * as constants from "../actions/constants";
@@ -8,7 +9,9 @@ import * as actions from "../actions/auth-actions";
 function* workerUserLogin(action) {
   try {
     const response = yield axios.post("users/login", action.values);
+    localStorage.setItem('user', JSON.stringify(response.data));
     yield put(actions.loginSuccess(response.data));
+    action.history.push('/dashboard');
     notification.success({
       message: "Success",
       description: "Login Success",
@@ -31,9 +34,10 @@ function* workerUserRegester(action) {
     yield put(actions.registerSuccess(response.data));
     notification.success({
       message: "Success",
-      description: "Login Success",
+      description: "User created successfully!",
       placement: "bottomRight"
     });
+    action.history.push('/login');
   } catch (error) {
     notification.error({
       message: "ERROR",
