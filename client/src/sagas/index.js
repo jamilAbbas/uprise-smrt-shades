@@ -11,12 +11,13 @@ function* workerUserLogin(action) {
     const response = yield axios.post("users/login", action.values);
     localStorage.setItem('user', JSON.stringify(response.data));
     yield put(actions.loginSuccess(response.data));
-    action.history.push('/dashboard');
+    // action.history.push('/dashboard');
     notification.success({
       message: "Success",
       description: "Login Success",
       placement: "bottomRight"
     });
+    window.location.href = "/dashboard"
   } catch (error) {
     notification.error({
       message: "Login Failed",
