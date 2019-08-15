@@ -23,10 +23,11 @@ export function loginFailed(error) {
 }
 
 
-export function registerRequest(values) {
+export function registerRequest(values, history) {
     return {
         type: constants.USER_SIGNUP_REQUEST,
-        values
+        values,
+        history
     }
 }
 

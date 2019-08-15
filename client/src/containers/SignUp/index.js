@@ -11,7 +11,7 @@ class SignUpForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        this.props.register(values);
+        this.props.register(values, this.props.history);
       }
     });
   };
@@ -94,7 +94,8 @@ const WrappedSignUpForm = Form.create({ name: "normal_signup" })(SignUpForm);
 const mapStatetoProps = state => ({});
 const mapDispatchToProps = dispatch => {
   return {
-    register: values => dispatch(actions.registerRequest(values))
+    register: (values, history) =>
+      dispatch(actions.registerRequest(values, history))
   };
 };
 export default connect(
