@@ -7,6 +7,12 @@ const path = require("path");
 const users = require("./routes/api/users");
 const app = express();
 
+// Passport middleware
+app.use(passport.initialize());
+
+// Passport config
+require("./config/passport")(passport);
+
 // Body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -21,6 +27,15 @@ mongoose
   .then(() => console.log("Connected to db"))
   .catch(err => console.log(err));
 app.get("/", (req, res) => res.send("Hello World!"));
+
+if (process.env.NODE_ENV === "production") {
+  // Set static folder
+  app.use(express.static("client/build"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
+
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log(`Server running on port ${port}`));
