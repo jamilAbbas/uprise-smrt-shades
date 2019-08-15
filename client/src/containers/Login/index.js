@@ -1,22 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { connect } from 'react-redux';
-import {
-  Form,
-  Icon,
-  Input,
-  Button,
-  Checkbox,
-} from "antd";
+import { connect } from "react-redux";
+import { Form, Icon, Input, Button, Checkbox } from "antd";
 
 import "./styles.css";
-import * as actions from '../../actions/auth-actions';
+import * as actions from "../../actions/auth-actions";
 
 class NormalLoginForm extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
+        console.log("---login fiels", values);
+        
         this.props.login(values);
         this.props.history.push("dashboard");
       }
@@ -77,7 +73,10 @@ class NormalLoginForm extends React.Component {
                 Log in
               </Button>
               <br />
-              Or <Link to="/sign-up"><a href="">register now!</a></Link>
+              Or{" "}
+              <Link to="/sign-up">
+                <a href="">register now!</a>
+              </Link>
             </Form.Item>
           </Form>
         </div>
@@ -89,15 +88,13 @@ class NormalLoginForm extends React.Component {
 const WrappedNormalLoginForm = Form.create({ name: "normal_login" })(
   NormalLoginForm
 );
-const mapStateToProps = state => ({
-
-});
+const mapStateToProps = state => ({});
 
 const mapDispatchtoProps = dispatch => {
   return {
     login: values => dispatch(actions.loginRequest(values))
-  }
-}
+  };
+};
 
 export default connect(
   mapStateToProps,

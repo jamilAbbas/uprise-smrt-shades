@@ -41,8 +41,9 @@ router.post("/register", (req, res) => {
 // @desc login user
 // @access public
 router.post("/login", (req, res) => {
-  const email = req.body.email;
+  const email = req.body.username;
   const password = req.body.password;
+  console.log("email", email);
   User.findOne({ email }).then(user => {
     if (!user) {
       return res.status(404).json({ email: "User not found" });
@@ -112,6 +113,5 @@ router.post("/delete", (req, res) => {
     }
   });
 });
-
 
 module.exports = router;
