@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
     Form,
@@ -7,13 +8,17 @@ import {
     Button,
     Checkbox,
 } from "antd";
+
 import "./styles.css";
+import * as actions from '../../actions/auth-actions';
+
 class SignUpForm extends React.Component {
     handleSubmit = e => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log("Received values of form: ", values);
+                this.props.register(values);
                 this.props.history.push("dashboard");
             }
         });
@@ -95,4 +100,14 @@ class SignUpForm extends React.Component {
 const WrappedSignUpForm = Form.create({ name: "normal_signup" })(
     SignUpForm
 );
-export default WrappedSignUpForm;
+
+const mapStatetoProps = state => ({});
+const mapDispatchToProps = dispatch => {
+    return {
+        register: values => dispatch(actions.registerRequest(values)),
+    }
+}
+export default connect(
+    mapStatetoProps,
+    mapDispatchToProps
+)(WrappedSignUpForm);

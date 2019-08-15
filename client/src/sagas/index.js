@@ -1,17 +1,44 @@
-import { call, put, takeLatest } from 'redux-saga/effects'
-// import Api from '...'
+import { put, takeLatest, all } from 'redux-saga/effects'
+import { notification, message } from 'antd';
+import axios from 'axios';
 
-function* fetchUser(action) {
+import * as constants from '../actions/constants';
+import * as actions from '../actions/auth-actions';
+
+function* workerUserLogin(action) {
     try {
-        // const user = yield call(Api.fetchUser, action.payload.userId);
-        yield put({ type: "USER_FETCH_SUCCEEDED", user: {} });
-    } catch (e) {
-        yield put({ type: "USER_FETCH_FAILED", message: e.message });
+        const response = yield axios.post('url here', action.values);
+        yield put(actions.loginSuccess(response.data));
+    } catch (error) {
+        notification.error({
+            message: 'ERROR',
+            description: error.message,
+            placement: 'bottomRight',
+        });
+        yield put(actions.loginFailed(error.message));
     }
 }
 
-function* mySaga() {
-    yield takeLatest("USER_FETCH_REQUESTED", fetchUser);
+function* workerUserRegester(action) {
+    try {
+        const response = yield axios.post('url here', action.values);
+        yield put(actions.registerSuccess(response.data));
+    } catch (error) {
+        notification.error({
+            message: 'ERROR',
+            description: error.message,
+            placement: 'bottomRight',
+        });
+        yield put(actions.registerFailed(error.message));
+    }
 }
 
-export default mySaga;
+
+function* watchAll() {
+    yield all([
+        takeLatest(constants.USER_LOGIN_REQUEST, workerUserLogin),
+        takeLatest(constants.USER_SIGNUP_REQUEST, workerUserRegester),
+    ]);
+}
+
+export default watchAll;
