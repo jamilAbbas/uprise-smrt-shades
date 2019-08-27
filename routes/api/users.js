@@ -114,4 +114,39 @@ router.post("/delete", (req, res) => {
   });
 });
 
+// @route PUT/api/user/id
+// @desc update specific user status
+// @access public
+router.put("/user/:id", async (req, res) => {
+  User.findByIdAndUpdate(req.params.id,
+    {isActive: req.body.isActive})
+  .then(user => {
+    if(!user){
+      return res.json({msg:"update failed"})
+    }else {
+      return res.status(200).json(user)
+    }
+  }).catch(error => {
+    return res.status(500).json({error: error.toString()})
+  });
+});
+
+// @route GET/api/users/current
+// @desc get current user
+// @access private
+
+router.get(
+  "/current",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    res.json({
+      id: req.user.id,
+      fullname: req.user.fullname,
+      email: req.user.email
+    });
+  }
+);
+
+
+
 module.exports = router;
