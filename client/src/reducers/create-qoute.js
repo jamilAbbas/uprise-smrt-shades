@@ -6,19 +6,21 @@ const initialstate = {
 
 const dashboard = (state = initialstate, action) => {
     switch (action.type) {
-        case constants.CREATC_QOUTE_REQUEST: {
-            return Object.assign({}.state, {
+        case constants.CREATE_QOUTE_REQUEST:
+            return Object.assign({}, state, {
                 loading: true
             });
-        }
-        case constants.CREATC_QOUTE_SUCCESS: {
-            return Object.assign({}.state, {
+        case constants.CREATE_QOUTE_SUCCESS: {
+            const current = Object.assign({}.state, {
+                current: state.current.push(action.data)
+            });
+            return Object.assign({}, state, {
                 current: state.current.push(action.data),
                 loading: false
             });
         }
-        case constants.CREATC_QOUTE_ERROR: {
-            return Object.assign({}.state, {
+        case constants.CREATE_QOUTE_ERROR: {
+            return Object.assign({}, state, {
                 loading: false
             });
         }

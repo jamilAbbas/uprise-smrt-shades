@@ -3,9 +3,10 @@ import { notification, message } from "antd";
 
 import axios from "axios";
 
+import * as qoutes from "../actions/get-qoutes";
 import * as constants from "../actions/constants";
 import * as actions from "../actions/auth-actions";
-import * as qoutes from "../actions/get-qoutes";
+import * as userQoutes from '../actions/create-qoute';
 
 function* workerUserLogin(action) {
   try {
@@ -63,12 +64,12 @@ function* workerFetchUserQoutes(action) {
 
 function* workerCreateQoute(action) {
   try {
-    const response = yield axios.post(`/quotes`, action.values);
-    yield put(qoutes.fetchListSuccess(response.data));
+    const response = yield axios.post(`/quotes/create`, action.values);
+    yield put(userQoutes.createQouteSuccess(response.data));
     message.success("Qoutes created successfully!");
   } catch (error) {
     message.error("Error while creating qoutes!");
-    yield put(qoutes.fetchListFailed(error.message));
+    yield put(userQoutes.createQouteError(error.message));
   }
 }
 
@@ -76,7 +77,7 @@ function* watchAll() {
   yield all([
     takeLatest(constants.USER_LOGIN_REQUEST, workerUserLogin),
     takeLatest(constants.USER_SIGNUP_REQUEST, workerUserRegester),
-    takeLatest(constants.CREATC_QOUTE_REQUEST, workerCreateQoute),
+    takeLatest(constants.CREATE_QOUTE_REQUEST, workerCreateQoute),
     takeLatest(constants.FETCH_LIST_REQUEST, workerFetchUserQoutes),
   ]);
 }

@@ -43,7 +43,7 @@ class NewQoutes extends Component {
         const { Option, OptGroup } = Select;
         return (
             <Form className="ant-advanced-search-form" onSubmit={this.handleSubmit}>
-                {/* <Row gutter={24} style={{ textAlign: "center" }}>
+                <Row gutter={24} style={{ textAlign: "center" }}>
                     <h3>New Shades</h3>
                 </Row>
                 <Row>
@@ -275,9 +275,9 @@ class NewQoutes extends Component {
                             )}
                         </Form.Item>
                     </Col>
-                </Row> */}
+                </Row>
                 <Row>
-                    {/* <Row>
+                    <Row>
                         <Divider />
                         <Row gutter={24} style={{ textAlign: 'center' }}>
                             <h3 >Motor</h3>
@@ -439,7 +439,7 @@ class NewQoutes extends Component {
                                 </Form.Item>
                             </Col>
                         </Row>
-                    </Row> */}
+                    </Row>
                     <Col span={24} style={{ textAlign: 'right' }}>
                         <Button type="primary" htmlType="submit">
                             Create

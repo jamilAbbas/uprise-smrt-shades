@@ -10,21 +10,21 @@ function getUser() {
 export function createQouteRequest(data) {
     const user = getUser();
     return {
-        type: constants.CREATC_QOUTE_REQUEST,
+        type: constants.CREATE_QOUTE_REQUEST,
         values: { ...data, userId: user.id }
     }
 }
 
 export function createQouteSuccess(data) {
     return {
-        type: constants.CREATC_QOUTE_SUCCESS,
+        type: constants.CREATE_QOUTE_SUCCESS,
         data
     }
 }
 
 export function createQouteError(error) {
     return {
-        type: constants.CREATC_QOUTE_ERROR,
+        type: constants.CREATE_QOUTE_ERROR,
         error
     }
 }

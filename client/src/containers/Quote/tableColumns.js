@@ -5,24 +5,24 @@ import { Divider } from 'antd';
 export const columns = [
     {
         title: "Select",
-        dataIndex: "type",
-        key: "type",
+        dataIndex: "shade_type",
+        key: "shade_type",
         render: text => <a href="javascript:;">{text}</a>
     },
     {
         title: "Room Name",
-        dataIndex: "room name",
-        key: "age"
+        dataIndex: "room_name",
+        key: "room_name"
     },
     {
         title: "Shade Name",
-        dataIndex: "shade name",
-        key: "address"
+        dataIndex: "shade_name",
+        key: "shade_name"
     },
     {
         title: "Fabric",
-        key: "fabric",
-        dataIndex: "fabric"
+        key: "fabrics",
+        dataIndex: "fabrics"
     },
     {
         title: "Width",
@@ -35,9 +35,9 @@ export const columns = [
         dataIndex: "height"
     },
     {
-        title: "MSRP",
-        key: "msrp",
-        dataIndex: "msrp"
+        title: "Roll Direction",
+        key: "roll_direction",
+        dataIndex: "roll_direction"
     },
     {
         title: "Acions",

@@ -11,17 +11,18 @@ router.get("/test", (req, res) => res.json({ msg: "Quotes working!" }));
 
 router.post("/create", (req, res) => {
   let newQuote = new Quote({
+    ...req.body,
     userId: req.body.userId,
-    shadeType: req.body.shadeType,
+    // shadeType: req.body.shadeType,
     height: req.body.height,
     width: req.body.width,
-    mountType: req.body.mountType,
-    controlSide: req.body.controlSide,
-    headerShadeType: req.body.headerShadeType,
+    // mountType: req.body.mountType,
+    // controlSide: req.body.controlSide,
+    // headerShadeType: req.body.headerShadeType,
     fabrics: req.body.fabrics,
-    roleDirection: req.body.roleDirection,
+    // roleDirection: req.body.roleDirection,
     motor: req.body.motor,
-    dcType: req.body.dcType
+    // dcType: req.body.dcType
   });
 
   newQuote

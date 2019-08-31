@@ -42,6 +42,12 @@ const QuoteSchema = new Schema({
   },
   single_or_double_shade: {
     type: String
+  },
+  room_name: {
+    type: String
+  },
+  shade_name: {
+    type: String
   }
 });
 
