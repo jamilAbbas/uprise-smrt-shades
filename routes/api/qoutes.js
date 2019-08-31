@@ -58,4 +58,19 @@ router.get("/:id", (req, res) => {
   });
 });
 
+// @route GET/api/qoutes/userId
+// @desc get qoutes against a userid
+// @access public
+
+router.get('/user/:userId', (req, res)=>{
+  Quote.find({userId: req.params.userId}).then( qts => {
+    if(qts.length < 1){
+      return res.json({msg :'No quotes found for this user'})
+    }else{
+      return res.status(200).json(qts);
+    }
+  }).catch(error => {
+    return res.status(500).json({error: error.toString()})
+  });
+});
 module.exports = router;
