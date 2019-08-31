@@ -1,4 +1,7 @@
-export const CREATC_QOUTE = 'CREATE_QOUTE';
+export const CREATC_QOUTE_REQUEST = 'CREATC_QOUTE_REQUEST';
+export const CREATC_QOUTE_SUCCESS = 'CREATC_QOUTE_SUCCESS';
+export const CREATC_QOUTE_ERROR = 'CREATC_QOUTE_ERROR';
+
 export const DELETE_QOUTE = 'DELETE_QOUTE';
 
 // Auth constants

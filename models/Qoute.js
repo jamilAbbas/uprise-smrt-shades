@@ -7,7 +7,7 @@ const QuoteSchema = new Schema({
   userId: {
     type: String
   },
-  shadeType: {
+  shade_type: {
     type: String
   },
   width: {
@@ -16,25 +16,31 @@ const QuoteSchema = new Schema({
   height: {
     type: String
   },
-  mountType: {
+  mount_type: {
     type: String
   },
-  controlSide: {
+  control_side: {
     type: String
   },
-  headerShadeType: {
+  header_shade_type: {
+    type: String
+  },
+  header_color: {
     type: String
   },
   fabrics: {
     type: String
   },
-  roleDirection: {
+  roll_direction: {
     type: String
   },
   motor: {
     type: String
   },
-  dcType: {
+  dc_type: {
+    type: String
+  },
+  single_or_double_shade: {
     type: String
   }
 });

@@ -4,9 +4,7 @@ import PropTypes from "prop-types";
 import {
     Row,
     Col,
-    Table,
     Button,
-    Modal,
     Form,
     Input,
     Select,
@@ -14,7 +12,6 @@ import {
 } from "antd";
 import "./styles.css";
 import * as actions from "../../actions/create-qoute";
-import { columns } from "./tableColumns";
 
 class NewQoutes extends Component {
     static propTypes = {
@@ -27,12 +24,11 @@ class NewQoutes extends Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        console.log(e, '0-0-0-0-0-0-0')
-        this.props.form.validateFieldsAndScroll((err, values = values.filter(val => val)) => {
+        this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
-                this.props.form.resetFields();
-                this.props.setModal2Visible();
                 this.props.addQoute(values);
+                // this.props.form.resetFields();
+                // this.props.setModal2Visible();
             }
         });
     };
@@ -47,7 +43,7 @@ class NewQoutes extends Component {
         const { Option, OptGroup } = Select;
         return (
             <Form className="ant-advanced-search-form" onSubmit={this.handleSubmit}>
-                <Row gutter={24} style={{ textAlign: "center" }}>
+                {/* <Row gutter={24} style={{ textAlign: "center" }}>
                     <h3>New Shades</h3>
                 </Row>
                 <Row>
@@ -279,9 +275,9 @@ class NewQoutes extends Component {
                             )}
                         </Form.Item>
                     </Col>
-                </Row>
+                </Row> */}
                 <Row>
-                    <Row>
+                    {/* <Row>
                         <Divider />
                         <Row gutter={24} style={{ textAlign: 'center' }}>
                             <h3 >Motor</h3>
@@ -443,7 +439,7 @@ class NewQoutes extends Component {
                                 </Form.Item>
                             </Col>
                         </Row>
-                    </Row>
+                    </Row> */}
                     <Col span={24} style={{ textAlign: 'right' }}>
                         <Button type="primary" htmlType="submit">
                             Create
@@ -461,9 +457,15 @@ class NewQoutes extends Component {
     }
 }
 
+const mapDispatchToProps = dispatch => {
+    return {
+        // addQoute: values => dispatch(actions.createQouteRequest(values))
+    }
+}
+
 const WrappedQuoteForm = Form.create({ name: "quote_form" })(NewQoutes);
 
 export default connect(
     null,
-    null
+    mapDispatchToProps
 )(WrappedQuoteForm);

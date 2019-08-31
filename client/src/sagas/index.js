@@ -1,4 +1,4 @@
-import { put, call, takeLatest, all } from "redux-saga/effects";
+import { put, takeEvery, takeLatest, all } from "redux-saga/effects";
 import { notification, message } from "antd";
 
 import axios from "axios";
@@ -9,7 +9,7 @@ import * as qoutes from "../actions/get-qoutes";
 
 function* workerUserLogin(action) {
   try {
-    const response = yield axios.post("users/login", action.values);
+    const response = yield axios.post("/users/login", action.values);
     localStorage.setItem('user', JSON.stringify(response.data));
     yield put(actions.loginSuccess(response.data));
     // action.history.push('/dashboard');
@@ -32,7 +32,7 @@ function* workerUserLogin(action) {
 function* workerUserRegester(action) {
   console.log("register user saga", action.values);
   try {
-    const response = yield axios.post("users/register", action.values);
+    const response = yield axios.post("/users/register", action.values);
     yield put(actions.registerSuccess(response.data));
     notification.success({
       message: "Success",
@@ -52,7 +52,7 @@ function* workerUserRegester(action) {
 
 function* workerFetchUserQoutes(action) {
   try {
-    const response = yield axios.get(`quotes/${action.id}`);
+    const response = yield axios.get(`/quotes/${action.id}`);
     yield put(qoutes.fetchListSuccess(response.data));
     message.success("Fetch user's qoutes successfully!");
   } catch (error) {
@@ -61,11 +61,23 @@ function* workerFetchUserQoutes(action) {
   }
 }
 
+function* workerCreateQoute(action) {
+  try {
+    const response = yield axios.post(`/quotes`, action.values);
+    yield put(qoutes.fetchListSuccess(response.data));
+    message.success("Qoutes created successfully!");
+  } catch (error) {
+    message.error("Error while creating qoutes!");
+    yield put(qoutes.fetchListFailed(error.message));
+  }
+}
+
 function* watchAll() {
   yield all([
     takeLatest(constants.USER_LOGIN_REQUEST, workerUserLogin),
     takeLatest(constants.USER_SIGNUP_REQUEST, workerUserRegester),
-    takeLatest(constants.FETCH_LIST_REQUEST, workerFetchUserQoutes)
+    takeLatest(constants.CREATC_QOUTE_REQUEST, workerCreateQoute),
+    takeLatest(constants.FETCH_LIST_REQUEST, workerFetchUserQoutes),
   ]);
 }
 

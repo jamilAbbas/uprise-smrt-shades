@@ -12,10 +12,7 @@ import {
   Divider
 } from "antd";
 
-
-
-
-import * as actions from '../../actions/create-qoute';
+import * as actions from "../../actions/create-qoute";
 import { columns } from './tableColumns';
 import "./styles.css";
 import NewQoutes from "./NewQoutes";
@@ -25,7 +22,7 @@ class Quote extends React.Component {
   state = {
     modal2Visible: false
   };
-  
+
   setModal2Visible(modal2Visible) {
     this.setState({ modal2Visible });
   }
@@ -199,7 +196,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    addQoute: values => dispatch(actions.createQoute(values))
+    addQoute: values => dispatch(actions.createQouteRequest(values))
+    // dispatch,
   }
 }
 
