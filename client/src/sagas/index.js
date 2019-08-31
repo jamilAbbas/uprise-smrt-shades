@@ -53,7 +53,7 @@ function* workerUserRegester(action) {
 
 function* workerFetchUserQoutes(action) {
   try {
-    const response = yield axios.get(`/quotes/${action.id}`);
+    const response = yield axios.get(`/quotes/user/${action.id}`);
     yield put(qoutes.fetchListSuccess(response.data));
     message.success("Fetch user's qoutes successfully!");
   } catch (error) {

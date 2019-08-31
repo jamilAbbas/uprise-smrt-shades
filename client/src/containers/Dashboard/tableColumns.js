@@ -3,46 +3,53 @@ import { Divider, Popconfirm, message } from 'antd';
 
 export const columns = [
     {
-        title: "Quote ID",
-        dataIndex: "key",
-        key: "key",
+        title: "Shade Type",
+        dataIndex: "shade_type",
+        key: "shade_type",
         render: text => <a href="javascript:;">{text}</a>
     },
     {
-        title: "Name",
-        dataIndex: "name",
-        key: "name",
+        title: "Fabric",
+        dataIndex: "fabrics",
+        key: "fabrics"
+    },
+    {
+        title: "DC Type",
+        dataIndex: "dc_type",
+        key: "dc_type",
         render: text => <strong>{text}</strong>
     },
     {
-        title: "Title",
-        dataIndex: "age",
-        key: "age"
+        title: "Control Side",
+        dataIndex: "control_side",
+        key: "control_side",
     },
     {
-        title: "Created By",
-        dataIndex: "address",
-        key: "address"
+        title: "Header Color",
+        dataIndex: "header_color",
+        key: "header_color"
     },
     {
-        title: "Created",
-        key: "tags",
-        dataIndex: "createdAt"
+        title: "Shade Type",
+        key: "shade_type",
+        dataIndex: "shade_type"
     },
     {
-        title: "Last Updated",
-        key: "tags",
-        dataIndex: "updatedAt"
+        title: "Roll Direction",
+        key: "roll_direction",
+        dataIndex: "roll_direction"
     },
     {
-        title: "MSRP",
-        key: "tags",
-        dataIndex: "msrp"
+        title: "Width",
+        key: "width",
+        dataIndex: "width",
+        render: text => <strong>{text}</strong>
     },
     {
-        title: "Payment Status",
-        key: "tags",
-        dataIndex: "status"
+        title: "height",
+        key: "height",
+        dataIndex: "height",
+        render: text => <strong>{text}</strong>
     },
     {
         title: "Acions",
