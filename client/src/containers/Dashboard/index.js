@@ -2,23 +2,28 @@ import React from "react";
 import { connect } from 'react-redux';
 import { Row, Col, Icon, Table, Tag, Button } from "antd";
 
-import { columns } from './tableColumns'
+import { columns } from './tableColumns';
+import * as actions from '../../actions/get-qoutes';
 import "./styles.css";
 
 class Dashboard extends React.Component {
+
+  componentDidMount() {
+    this.props.fetchList();
+  }
   render() {
     const { dashboard } = this.props;
     return (
       <div className="dashboardContainer">
-        <Row>
+        <Row gutter={96}>
           <Col offset={1} span={6} sm={24}>
-            <div className="manageUsersContainer">
-              <h1>Manage Users</h1>
+            {/* <div className="manageUsersContainer"> */}
+              {/* <h1>Manage Users</h1>
               <div className="useraccount">
                 <Icon type="team" style={{ fontSize: "44px" }} />
                 <p style={{ fontSize: "14px" }}>User Accounts</p>
-              </div>
-            </div>
+              </div> */}
+            {/* </div> */}
           </Col>
         </Row>
 
@@ -66,7 +71,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    dispatch
+    fetchList: () => dispatch(actions.fetchListRequest())
   }
 }
 

@@ -5,6 +5,7 @@ import axios from "axios";
 
 import * as constants from "../actions/constants";
 import * as actions from "../actions/auth-actions";
+import * as qoutes from "../actions/get-qoutes";
 
 function* workerUserLogin(action) {
   try {
@@ -49,10 +50,22 @@ function* workerUserRegester(action) {
   }
 }
 
+function* workerFetchUserQoutes(action) {
+  try {
+    const response = yield axios.get(`quotes/${action.id}`);
+    yield put(qoutes.fetchListSuccess(response.data));
+    message.success("Fetch user's qoutes successfully!");
+  } catch (error) {
+    message.error("Error while fetching list!!");
+    yield put(qoutes.fetchListFailed(error.message));
+  }
+}
+
 function* watchAll() {
   yield all([
     takeLatest(constants.USER_LOGIN_REQUEST, workerUserLogin),
-    takeLatest(constants.USER_SIGNUP_REQUEST, workerUserRegester)
+    takeLatest(constants.USER_SIGNUP_REQUEST, workerUserRegester),
+    takeLatest(constants.FETCH_LIST_REQUEST, workerFetchUserQoutes)
   ]);
 }
 
