@@ -7,24 +7,24 @@ function getUser() {
     return user = jwt.decode(token)
 }
 
-export function createQouteRequest(data) {
+export function fetchListRequest() {
     const user = getUser();
     return {
-        type: constants.CREATC_QOUTE_REQUEST,
-        values: { ...data, userId: user.id }
+        type: constants.FETCH_LIST_REQUEST,
+        id: user.id,
     }
 }
 
-export function createQouteSuccess(data) {
+export function fetchListSuccess(data) {
     return {
-        type: constants.CREATC_QOUTE_SUCCESS,
+        type: constants.FETCH_LIST_SUCCESS,
         data
     }
 }
 
-export function createQouteError(error) {
+export function fetchListFailed(error) {
     return {
-        type: constants.CREATC_QOUTE_ERROR,
+        type: constants.FETCH_LIST_FAILURE,
         error
     }
 }

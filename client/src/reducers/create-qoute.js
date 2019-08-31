@@ -1,16 +1,25 @@
 import * as constants from '../actions/constants';
 const initialstate = {
     current: [],
+    loading: false
 }
 
 const dashboard = (state = initialstate, action) => {
     switch (action.type) {
-        case constants.CREATC_QOUTE: {
-            const current = Object.assign({}.state, {
-                current: state.current.push(action.data)
-            });
+        case constants.CREATC_QOUTE_REQUEST: {
             return Object.assign({}.state, {
-                current: state.current.push(action.data)
+                loading: true
+            });
+        }
+        case constants.CREATC_QOUTE_SUCCESS: {
+            return Object.assign({}.state, {
+                current: state.current.push(action.data),
+                loading: false
+            });
+        }
+        case constants.CREATC_QOUTE_ERROR: {
+            return Object.assign({}.state, {
+                loading: false
             });
         }
         case constants.DELETE_QOUTE:
