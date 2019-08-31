@@ -25,27 +25,10 @@ class Quote extends React.Component {
   state = {
     modal2Visible: false
   };
+  
   setModal2Visible(modal2Visible) {
     this.setState({ modal2Visible });
   }
-  handleChange(value) {
-    console.log(`selected ${value}`);
-  }
-
-  handleSubmit = e => {
-    e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
-        this.props.form.resetFields();
-        this.setModal2Visible(false);
-        this.props.addQoute(values);
-      }
-    });
-  };
-
-  handleReset = () => {
-    this.props.form.resetFields();
-  };
 
   render() {
     const { data, form } = this.props;
@@ -111,7 +94,7 @@ class Quote extends React.Component {
                 <Button
                   type="primary"
                   icon="edit"
-                  onClick={() => this.setModal2Visible(true)}
+                // onClick={() => this.setModal2Visible(true)}
                 >
                   Edit
                 </Button>
@@ -132,7 +115,7 @@ class Quote extends React.Component {
                 <Button
                   type="primary"
                   icon="plus"
-                  onClick={() => this.setModal2Visible(true)}
+                // onClick={() => this.setModal2Visible(true)}
                 >
                   Place Order
                 </Button>
@@ -141,7 +124,7 @@ class Quote extends React.Component {
                 <Button
                   type="success"
                   icon="copy"
-                  onClick={() => this.setModal2Visible(true)}
+                // onClick={() => this.setModal2Visible(true)}
                 >
                   Excel
                 </Button>
@@ -150,7 +133,7 @@ class Quote extends React.Component {
                 <Button
                   type="success"
                   icon="copy"
-                  onClick={() => this.setModal2Visible(true)}
+                // onClick={() => this.setModal2Visible(true)}
                 >
                   Duplicate
                 </Button>
@@ -186,18 +169,24 @@ class Quote extends React.Component {
         </Row>
         <Modal
           centered
+          footer={null}
+          width={800}
+          closable={true}
+          maskClosable={false}
           title="Create Qoutes"
           visible={this.state.modal2Visible}
-          footer={null}
           onOk={() => this.setModal2Visible(false)}
           onCancel={() => this.setModal2Visible(false)}
-          width = {800}
-          style = {{maxHeight: "70vh", overflowY: "auto", borderRadius: 10}}
-          maskClosable= {false}
+          style={{ maxHeight: "80vh", overflowY: "auto", borderRadius: 10 }}
         >
-         <div>
-           <NewQoutes  />
-         </div>
+          <div>
+            <NewQoutes
+              setModal2Visible={() => {
+                this.setState({ modal2Visible: false })
+              }}
+              addQoute={data => this.props.addQoute(data)}
+            />
+          </div>
         </Modal>
       </div>
     );

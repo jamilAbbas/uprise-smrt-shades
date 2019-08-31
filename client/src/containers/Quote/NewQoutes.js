@@ -21,6 +21,26 @@ class NewQoutes extends Component {
         prop: PropTypes
     };
 
+    handleChange(value) {
+        console.log(`selected ${value}`);
+    }
+
+    handleSubmit = e => {
+        e.preventDefault();
+        console.log(e, '0-0-0-0-0-0-0')
+        this.props.form.validateFieldsAndScroll((err, values = values.filter(val => val)) => {
+            if (!err) {
+                this.props.form.resetFields();
+                this.props.setModal2Visible();
+                this.props.addQoute(values);
+            }
+        });
+    };
+
+    handleReset = () => {
+        this.props.form.resetFields();
+    };
+
     render() {
         const { form } = this.props;
         const { getFieldDecorator } = form;
@@ -33,7 +53,14 @@ class NewQoutes extends Component {
                 <Row>
                     <Col span={8} style={{ textAlign: "center", fontWeight: 600 }}>
                         <Form.Item label="Shade Type">
-                            {getFieldDecorator("shade_type")(
+                            {getFieldDecorator("shade_type", {
+                                rules: [
+                                    {
+                                        required: true,
+                                        message: 'Please select shade type!'
+                                    },
+                                ],
+                            })(
                                 <Select
                                     defaultValue="-"
                                     style={{ width: 200 }}
@@ -48,7 +75,14 @@ class NewQoutes extends Component {
                     </Col>
                     <Col span={8} style={{ textAlign: "center", fontWeight: 600 }}>
                         <Form.Item label="Single or Duel Shade">
-                            {getFieldDecorator("single_or_double_shade")(
+                            {getFieldDecorator("single_or_double_shade", {
+                                rules: [
+                                    {
+                                        required: true,
+                                        message: 'Please select one from the list!'
+                                    },
+                                ],
+                            })(
                                 <Select style={{ width: 200 }} onChange={this.handleChange}>
                                     <Option value="-">-</Option>
                                     <Option value="Single">Single</Option>
@@ -59,7 +93,14 @@ class NewQoutes extends Component {
                     </Col>
                     <Col span={8} style={{ textAlign: "center", fontWeight: 600 }}>
                         <Form.Item label="Width">
-                            {getFieldDecorator("width")(
+                            {getFieldDecorator("width", {
+                                rules: [
+                                    {
+                                        required: true,
+                                        message: 'Please select width!'
+                                    },
+                                ],
+                            })(
                                 <Input
                                     style={{ width: 200 }}
                                     addonAfter={
@@ -80,7 +121,14 @@ class NewQoutes extends Component {
                     </Col>
                     <Col span={8} style={{ textAlign: "center", fontWeight: 600 }}>
                         <Form.Item label="Height">
-                            {getFieldDecorator("height")(
+                            {getFieldDecorator("height", {
+                                rules: [
+                                    {
+                                        required: true,
+                                        message: 'Please select height!'
+                                    },
+                                ],
+                            })(
                                 <Input
                                     style={{ width: 200 }}
                                     addonAfter={
@@ -101,7 +149,14 @@ class NewQoutes extends Component {
                     </Col>
                     <Col span={8} style={{ textAlign: "center", fontWeight: 600 }}>
                         <Form.Item label="Mount Type">
-                            {getFieldDecorator("mount_type")(
+                            {getFieldDecorator("mount_type", {
+                                rules: [
+                                    {
+                                        required: true,
+                                        message: 'Please select mount type!'
+                                    },
+                                ],
+                            })(
                                 <Select style={{ width: 200 }} onChange={this.handleChange}>
                                     <Option value="jack">Jack</Option>
                                     <Option value="lucy">Lucy</Option>
@@ -112,7 +167,14 @@ class NewQoutes extends Component {
                     </Col>
                     <Col span={8} style={{ textAlign: "center", fontWeight: 600 }}>
                         <Form.Item label="Control Side">
-                            {getFieldDecorator("control_side")(
+                            {getFieldDecorator("control_side", {
+                                rules: [
+                                    {
+                                        required: true,
+                                        message: 'Please select control side!'
+                                    },
+                                ],
+                            })(
                                 <Select style={{ width: 200 }} onChange={this.handleChange}>
                                     <Option value="jack">Jack</Option>
                                     <Option value="lucy">Lucy</Option>
@@ -129,7 +191,14 @@ class NewQoutes extends Component {
                 <Row>
                     <Col span={12} style={{ textAlign: 'center', fontWeight: 600 }}>
                         <Form.Item label="Shade Type">
-                            {getFieldDecorator("header_shade_type")(
+                            {getFieldDecorator("header_shade_type", {
+                                rules: [
+                                    {
+                                        required: true,
+                                        message: 'Please select header shade type!'
+                                    },
+                                ],
+                            })(
                                 <Select defaultValue="-" style={{ width: 200 }} onChange={this.handleChange}>
                                     <Option value="-">- </Option>
                                     <OptGroup label="Facica">
@@ -149,7 +218,14 @@ class NewQoutes extends Component {
                     </Col>
                     <Col span={12} style={{ textAlign: 'center', fontWeight: 600 }}>
                         <Form.Item label="Header Color">
-                            {getFieldDecorator("header_color")(
+                            {getFieldDecorator("header_color", {
+                                rules: [
+                                    {
+                                        required: true,
+                                        message: 'Please select header color!'
+                                    },
+                                ],
+                            })(
                                 <Select defaultValue="-" style={{ width: 200 }} onChange={this.handleChange}>
                                     <Option value="">-</Option>
                                     <Option value="Anodized">Anodized</Option>
@@ -169,7 +245,14 @@ class NewQoutes extends Component {
                     </Row>
                     <Col span={12} style={{ textAlign: 'center', fontWeight: 600 }}>
                         <Form.Item label="Fabrics">
-                            {getFieldDecorator("fabrics")(
+                            {getFieldDecorator("fabrics", {
+                                rules: [
+                                    {
+                                        required: true,
+                                        message: 'Please select fabric!'
+                                    },
+                                ],
+                            })(
                                 <Select defaultValue="-" style={{ width: 200 }} onChange={this.handleChange}>
                                     <Option value="-">-</Option>
                                     <Option value="Manual">Manual</Option>
@@ -180,7 +263,14 @@ class NewQoutes extends Component {
                     </Col>
                     <Col span={12} style={{ textAlign: 'center', fontWeight: 600 }}>
                         <Form.Item label="Roll Direction">
-                            {getFieldDecorator("roll_direction")(
+                            {getFieldDecorator("roll_direction", {
+                                rules: [
+                                    {
+                                        required: true,
+                                        message: 'Please select rool direction!'
+                                    },
+                                ],
+                            })(
                                 <Select defaultValue="-" style={{ width: 200 }} onChange={this.handleChange}>
                                     <Option value="-">-</Option>
                                     <Option value="Standard Roll">Standard Roll</Option>
@@ -198,7 +288,14 @@ class NewQoutes extends Component {
                         </Row>
                         <Col span={12} style={{ textAlign: 'center', fontWeight: 600 }}>
                             <Form.Item label="Motor">
-                                {getFieldDecorator("motor")(
+                                {getFieldDecorator("motor", {
+                                    rules: [
+                                        {
+                                            required: true,
+                                            message: 'Please select motor type!'
+                                        },
+                                    ],
+                                })(
                                     <Select defaultValue="-" style={{ width: 200 }} onChange={this.handleChange}>
                                         <Option value="28 mm Hardwired RF Motor">28 mm Hardwired RF Motor</Option>
                                         <Option value="28 mm Li-Ion RF">28 mm Li-Ion RF</Option>
@@ -211,7 +308,14 @@ class NewQoutes extends Component {
                         </Col>
                         <Col span={12} style={{ textAlign: 'center', fontWeight: 600 }}>
                             <Form.Item label="DC Type">
-                                {getFieldDecorator("dc_type")(
+                                {getFieldDecorator("dc_type", {
+                                    rules: [
+                                        {
+                                            required: true,
+                                            message: 'Please select DC type!'
+                                        },
+                                    ],
+                                })(
                                     <Select defaultValue="-" style={{ width: 200 }} onChange={this.handleChange}>
                                         <Option value="">-</Option><Option value="Hardwired">Hardwired</Option>
                                         <Option value="Solar Panel - 3 Watt" disabled="true">Solar Panel - 3 Watt</Option>
@@ -230,7 +334,14 @@ class NewQoutes extends Component {
                             </Row>
                             <Col span={12} style={{ textAlign: 'center', fontWeight: 600 }}>
                                 <Form.Item label="Hembar Type">
-                                    {getFieldDecorator("hembar_type")(
+                                    {getFieldDecorator("hembar_type", {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message: 'Please select hembar type!'
+                                            },
+                                        ],
+                                    })(
                                         <Select defaultValue="-" style={{ width: 200 }} onChange={this.handleChange}>
                                             <Option value="Internal / Sealed">Internal / Sealed</Option>
                                             <Option value="External / Fabric Wrapped">External / Fabric Wrapped</Option>
@@ -241,7 +352,14 @@ class NewQoutes extends Component {
                             </Col>
                             <Col span={12} style={{ textAlign: 'center', fontWeight: 600 }}>
                                 <Form.Item label="Hembar Color">
-                                    {getFieldDecorator("hembar_color")(
+                                    {getFieldDecorator("hembar_color", {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message: 'Please select hembar color!'
+                                            },
+                                        ],
+                                    })(
                                         <Select defaultValue="-" style={{ width: 200 }} onChange={this.handleChange}>
                                             <Option value="">-</Option>
                                             <Option value="Anodized">Anodized</Option>
@@ -261,14 +379,28 @@ class NewQoutes extends Component {
                             </Row>
                             <Col span={12} style={{ textAlign: 'center', fontWeight: 600 }}>
                                 <Form.Item label="Floor">
-                                    {getFieldDecorator("floor")(
+                                    {getFieldDecorator("floor", {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message: 'Enter floors here'
+                                            },
+                                        ],
+                                    })(
                                         <Input type="number" style={{ width: 200 }} />
                                     )}
                                 </Form.Item>
                             </Col>
                             <Col span={12} style={{ textAlign: 'center', fontWeight: 600 }}>
                                 <Form.Item label="Direction Facing">
-                                    {getFieldDecorator("direction_facing")(
+                                    {getFieldDecorator("direction_facing", {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message: 'Please select direction facing!'
+                                            },
+                                        ],
+                                    })(
                                         <Select defaultValue="-" style={{ width: 200 }} onChange={this.handleChange}>
                                             <Option value="">Unknown</Option>
                                             <Option value="North">North</Option>
@@ -284,14 +416,28 @@ class NewQoutes extends Component {
                             </Col>
                             <Col span={12} style={{ textAlign: 'center', fontWeight: 600 }}>
                                 <Form.Item label="Room Name">
-                                    {getFieldDecorator("room_name")(
+                                    {getFieldDecorator("room_name", {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message: 'Enter room name'
+                                            },
+                                        ],
+                                    })(
                                         <Input type="text" style={{ width: 200 }} />
                                     )}
                                 </Form.Item>
                             </Col>
                             <Col span={12} style={{ textAlign: 'center', fontWeight: 600 }}>
-                                <Form.Item label="Shade Namee">
-                                    {getFieldDecorator("shade_name")(
+                                <Form.Item label="Shade Name">
+                                    {getFieldDecorator("shade_name", {
+                                        rules: [
+                                            {
+                                                required: true,
+                                                message: 'Enter shade name!'
+                                            },
+                                        ],
+                                    })(
                                         <Input type="text" style={{ width: 200 }} />
                                     )}
                                 </Form.Item>
@@ -304,6 +450,9 @@ class NewQoutes extends Component {
                         </Button>
                         <Button style={{ marginLeft: 8 }} onClick={this.handleReset}>
                             Clear
+                        </Button>
+                        <Button style={{ marginLeft: 8 }} onClick={() => this.props.setModal2Visible()}>
+                            Close
                         </Button>
                     </Col>
                 </Row>
