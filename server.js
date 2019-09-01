@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 app.use("/users", users);
 
 //Quote Routes
-app.use("/api/quotes", quotes);
+app.use("/quotes", quotes);
 
 //DB config
 const db = require("./config/keys").mongoURI;
