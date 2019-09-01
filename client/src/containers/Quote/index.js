@@ -8,62 +8,29 @@ import {
   Modal,
   Form,
   Input,
+  Select,
+  Divider
 } from "antd";
 
-import * as actions from '../../actions/create-qoute';
+import * as actions from "../../actions/create-qoute";
 import { columns } from './tableColumns';
 import "./styles.css";
+import NewQoutes from "./NewQoutes";
 
 
 class Quote extends React.Component {
   state = {
     modal2Visible: false
   };
+
   setModal2Visible(modal2Visible) {
     this.setState({ modal2Visible });
   }
 
-  getFields() {
-    const labels = ["Type", "Room Name", "Shade Name", "Fabric", "Width", "Height", "MSRP"]
-    const { getFieldDecorator } = this.props.form;
-    const children = [];
-    for (let i = 0; i < labels.length; i++) {
-      children.push(
-        <Col span={8} key={i} style={{ display: 'block' }}>
-          <Form.Item label={labels[i]}>
-            {getFieldDecorator(labels[i].trim().toLowerCase(), {
-              rules: [
-                {
-                  required: true,
-                  message: 'Please enter value!',
-                },
-              ],
-            })(<Input placeholder="Enter value" />)}
-          </Form.Item>
-        </Col>,
-      );
-    }
-    return children;
-  }
-
-  handleSubmit = e => {
-    e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
-        this.props.form.resetFields();
-        this.setModal2Visible(false);
-        this.props.addQoute(values);
-      }
-    });
-  };
-
-  handleReset = () => {
-    this.props.form.resetFields();
-  };
-
   render() {
     const { data, form } = this.props;
     const { getFieldDecorator } = form;
+    const { Option, OptGroup } = Select;
 
     return (
       <div className="dashboardContainer">
@@ -124,7 +91,7 @@ class Quote extends React.Component {
                 <Button
                   type="primary"
                   icon="edit"
-                  onClick={() => this.setModal2Visible(true)}
+                // onClick={() => this.setModal2Visible(true)}
                 >
                   Edit
                 </Button>
@@ -145,7 +112,7 @@ class Quote extends React.Component {
                 <Button
                   type="primary"
                   icon="plus"
-                  onClick={() => this.setModal2Visible(true)}
+                // onClick={() => this.setModal2Visible(true)}
                 >
                   Place Order
                 </Button>
@@ -154,7 +121,7 @@ class Quote extends React.Component {
                 <Button
                   type="success"
                   icon="copy"
-                  onClick={() => this.setModal2Visible(true)}
+                // onClick={() => this.setModal2Visible(true)}
                 >
                   Excel
                 </Button>
@@ -163,7 +130,7 @@ class Quote extends React.Component {
                 <Button
                   type="success"
                   icon="copy"
-                  onClick={() => this.setModal2Visible(true)}
+                // onClick={() => this.setModal2Visible(true)}
                 >
                   Duplicate
                 </Button>
@@ -199,25 +166,24 @@ class Quote extends React.Component {
         </Row>
         <Modal
           centered
+          footer={null}
+          width={800}
+          closable={true}
+          maskClosable={false}
           title="Create Qoutes"
           visible={this.state.modal2Visible}
-          footer={null}
           onOk={() => this.setModal2Visible(false)}
           onCancel={() => this.setModal2Visible(false)}
+          style={{ maxHeight: "80vh", overflowY: "auto", borderRadius: 10 }}
         >
-          <Form className="ant-advanced-search-form" onSubmit={this.handleSubmit}>
-            <Row gutter={24}>{this.getFields()}</Row>
-            <Row>
-              <Col span={24} style={{ textAlign: 'right' }}>
-                <Button type="primary" htmlType="submit">
-                  Create
-                </Button>
-                <Button style={{ marginLeft: 8 }} onClick={this.handleReset}>
-                  Clear
-                </Button>
-              </Col>
-            </Row>
-          </Form>
+          <div>
+            <NewQoutes
+              setModal2Visible={() => {
+                this.setState({ modal2Visible: false })
+              }}
+              addQoute={data => this.props.addQoute(data)}
+            />
+          </div>
         </Modal>
       </div>
     );
@@ -230,7 +196,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    addQoute: values => dispatch(actions.createQoute(values))
+    addQoute: values => dispatch(actions.createQouteRequest(values))
+    // dispatch,
   }
 }
 

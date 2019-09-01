@@ -1,0 +1,23 @@
+.dashboardContainer {
+  padding: 1rem;
+  background: lightgray;
+}
+.manageUsersContainer {
+  width: 17rem;
+  height: 10rem;
+  margin-top: 2rem;
+  text-align: center;
+  padding-bottom: 0;
+  padding-left: 0;
+  padding-right: 0;
+  padding-top: 2rem;
+  margin-bottom: 6rem;
+}
+.useraccount {
+  height: auto;
+  width: auto;
+  background: white;
+  color: black;
+  border: 1px solid;
+  padding: 5px;
+}

@@ -1,74 +1,45 @@
+import * as constants from '../actions/constants';
 const initialstate = {
-    activeQoutes: [
-        {
-            key: 101,
-            name: "Smith",
-            age: 31,
-            address: 'North Carolina',
-            tags: 'Data Science',
-            status: 'PENDING'
-        },
-        {
-            key: 102,
-            name: "Joy Lobo",
-            age: 31,
-            address: 'South Carolina',
-            tags: 'Dev',
-            status: 'PENDING'
-        },
-        {
-            key: 103,
-            name: "Jhon",
-            age: 34,
-            address: 'Florida',
-            tags: 'Tech',
-            status: 'PAID'
-        },
-        {
-            key: 104,
-            name: "Bob",
-            age: 20,
-            address: 'Houwia',
-            tags: 'Data Science',
-            status: 'IN PROCESS'
-        },
-        {
-            key: 105,
-            name: "Jasom",
-            age: 21,
-            address: 'Carolina',
-            tags: 'some tags here',
-            status: 'PENDING'
-        },
-        {
-            key: 106,
-            name: "Rechard",
-            age: 41,
-            address: 'South Carolina',
-            tags: 'Dev',
-            status: 'PENDING'
-        },
-        {
-            key: 107,
-            name: "Mike",
-            age: 31,
-            address: 'Florida',
-            tags: 'Venture',
-            status: 'PAID'
-        },
-        {
-            key: 108,
-            name: "Alice",
-            age: 30,
-            address: 'Houwia',
-            tags: 'Data Science',
-            status: 'IN PROCESS'
-        },
-    ],
+    activeQoutes: [],
+    loading: false,
+    users: [],
 }
 
 const dashboard = (state = initialstate, action) => {
     switch (action.type) {
+        case constants.FETCH_LIST_REQUEST:
+            return Object.assign({}, state, {
+                loading: true
+            });
+        case constants.FETCH_LIST_SUCCESS: {
+            // const activeQoutes = Object.assign({}.state, {
+            //     activeQoutes: state.activeQoutes.push(action.data)
+            // });
+            return Object.assign({}, state, {
+                activeQoutes: action.data,
+                loading: false
+            });
+        }
+        case constants.FETCH_LIST_FAILURE:
+            return Object.assign({}, state, {
+                loading: false
+            });
+
+        //User List for Admin user only
+        case constants.FETCH_USER_LIST_REQUEST:
+            return Object.assign({}, state, {
+                loading: true
+            });
+        case constants.FETCH_USER_LIST_SUCCESS:
+            return Object.assign({}, state, {
+                users: action.data,
+                loading: false
+            });
+        case constants.FETCH_USER_LIST_FAILURE:
+            return Object.assign({}, state, {
+                loading: false
+            });
+
         case 'ADD_QOUTES':
             return [
                 ...state,
