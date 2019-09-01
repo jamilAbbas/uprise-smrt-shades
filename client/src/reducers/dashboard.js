@@ -1,7 +1,8 @@
 import * as constants from '../actions/constants';
 const initialstate = {
     activeQoutes: [],
-    loading: false
+    loading: false,
+    users: [],
 }
 
 const dashboard = (state = initialstate, action) => {
@@ -23,6 +24,22 @@ const dashboard = (state = initialstate, action) => {
             return Object.assign({}, state, {
                 loading: false
             });
+
+        //User List for Admin user only
+        case constants.FETCH_USER_LIST_REQUEST:
+            return Object.assign({}, state, {
+                loading: true
+            });
+        case constants.FETCH_USER_LIST_SUCCESS:
+            return Object.assign({}, state, {
+                users: action.data,
+                loading: false
+            });
+        case constants.FETCH_USER_LIST_FAILURE:
+            return Object.assign({}, state, {
+                loading: false
+            });
+
         case 'ADD_QOUTES':
             return [
                 ...state,

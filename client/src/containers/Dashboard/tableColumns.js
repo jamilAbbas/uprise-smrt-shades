@@ -30,9 +30,9 @@ export const columns = [
         key: "header_color"
     },
     {
-        title: "Shade Type",
-        key: "shade_type",
-        dataIndex: "shade_type"
+        title: "Shade Header Type",
+        key: "header_shade_type",
+        dataIndex: "header_shade_type"
     },
     {
         title: "Roll Direction",

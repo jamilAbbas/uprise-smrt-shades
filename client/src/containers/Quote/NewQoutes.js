@@ -27,8 +27,8 @@ class NewQoutes extends Component {
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
                 this.props.addQoute(values);
-                // this.props.form.resetFields();
-                // this.props.setModal2Visible();
+                this.props.form.resetFields();
+                this.props.setModal2Visible();
             }
         });
     };

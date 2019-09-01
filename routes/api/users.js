@@ -118,7 +118,7 @@ router.post("/delete", (req, res) => {
 // @route PUT/api/user/id
 // @desc update specific user status
 // @access public
-router.put("/user/:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
   User.findByIdAndUpdate(req.params.id,
     { isActive: req.body.isActive })
     .then(user => {
@@ -136,7 +136,7 @@ router.put("/user/:id", async (req, res) => {
 // @route PUT/api/user/id
 // @desc update specific user status
 // @access public
-router.put("/user/:id/role", async (req, res) => {
+router.put("/:id/role", async (req, res) => {
   User.findByIdAndUpdate(req.params.id,
     { role: req.body.role })
     .then(user => {

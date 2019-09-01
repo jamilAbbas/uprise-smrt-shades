@@ -92,12 +92,48 @@ function* workerCreateQoute(action) {
   }
 }
 
+function* workerFetchUserList() {
+  try {
+    const response = yield axios.get(`/users/all`);
+    yield put(qoutes.fetchUserListSuccess(response.data));
+    message.success("Fetch users successfully!");
+  } catch (error) {
+    message.error("Error while fetching user!");
+    yield put(qoutes.fetchUserListFailed(error.message));
+  }
+}
+
+function* workerSetIsActive(action) {
+  try {
+    const response = yield axios.put(`/users/${action.id}`, action.data);
+    yield put(qoutes.fetchUserListRequest());
+    message.success("Update user successfully");
+  } catch (error) {
+    message.error("Failed to update user!");
+    yield put(qoutes.fetchUserListFailed(error.message));
+  }
+}
+
+function* workerUpdateRole(action) {
+  try {
+    const response = yield axios.put(`/users/${action.id}/role`, action.data);
+    yield put(qoutes.fetchUserListRequest());
+    message.success("Update user successfully");
+  } catch (error) {
+    message.error("Failed to update user!");
+    yield put(qoutes.fetchUserListFailed(error.message));
+  }
+}
+
 function* watchAll() {
   yield all([
     takeLatest(constants.USER_LOGIN_REQUEST, workerUserLogin),
-    takeLatest(constants.USER_SIGNUP_REQUEST, workerUserRegester),
+    takeLatest(constants.TOGGLE_IS_ACTIVE, workerSetIsActive),
+    takeLatest(constants.UPDATE_ROLE_REQUEST, workerUpdateRole),
     takeLatest(constants.CREATE_QOUTE_REQUEST, workerCreateQoute),
+    takeLatest(constants.USER_SIGNUP_REQUEST, workerUserRegester),
     takeLatest(constants.FETCH_LIST_REQUEST, workerFetchUserQoutes),
+    takeLatest(constants.FETCH_USER_LIST_REQUEST, workerFetchUserList),
   ]);
 }
 
