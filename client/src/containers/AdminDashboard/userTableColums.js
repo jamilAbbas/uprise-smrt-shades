@@ -31,7 +31,7 @@ export const userColumns = (parent) => [
         key: "action",
         render: (text, record) => (
             <span>
-                <Tooltip title="active/inactive">
+                <Tooltip title="active/inactive˝">
                     <Switch
                         checked={record.isActive}
                         onChange={() => parent.props.updateUser(

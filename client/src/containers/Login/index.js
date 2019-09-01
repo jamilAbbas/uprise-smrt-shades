@@ -1,19 +1,32 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import jwt from 'jsonwebtoken';
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { Form, Icon, Input, Button, Checkbox } from "antd";
 
 import "./styles.css";
 import * as actions from "../../actions/auth-actions";
 
 class NormalLoginForm extends React.Component {
+
+  componentDidMount() {
+    let user = JSON.parse(localStorage.getItem('user'));
+    const token = user.token.slice(user.token.indexOf(' ') + 1);
+    const currentUser = jwt.decode(token);
+    if (currentUser.role === 'Admin') {
+      this.props.history.push('/admin-dashboard');
+    } else {
+      this.props.history.push('/dashboard');
+    }
+  }
+
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
         this.props.login(
           values, this.props.history
-          )
+        )
       }
     });
   };

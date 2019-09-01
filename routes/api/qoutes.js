@@ -32,7 +32,7 @@ router.post("/create", (req, res) => {
 router.get("/all", (req, res) => {
   Quote.find().then(quotes => {
     if (!quotes) {
-      return res.json({ msg: "No Quotes available" });
+      return res.json([]);
     } else {
       return res.status(200).json(quotes);
     }
@@ -45,7 +45,7 @@ router.get("/all", (req, res) => {
 router.get("/:id", (req, res) => {
   Quote.findOne({ _id: req.params.id }).then(quote => {
     if (!quote) {
-      return res.json({ msg: "Quote not found" });
+      return res.json({});
     } else {
       return res.status(200).json(quote);
     }
@@ -59,7 +59,7 @@ router.get("/:id", (req, res) => {
 router.get('/user/:userId', (req, res) => {
   Quote.find({ userId: req.params.userId }).then(qts => {
     if (qts.length < 1) {
-      return res.json({ msg: 'No quotes found for this user' })
+      return res.json([])
     } else {
       return res.status(200).json(qts);
     }
