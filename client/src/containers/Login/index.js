@@ -10,13 +10,16 @@ import * as actions from "../../actions/auth-actions";
 class NormalLoginForm extends React.Component {
 
   componentDidMount() {
-    let user = JSON.parse(localStorage.getItem('user'));
-    const token = user.token.slice(user.token.indexOf(' ') + 1);
-    const currentUser = jwt.decode(token);
-    if (currentUser.role === 'Admin') {
-      this.props.history.push('/admin-dashboard');
-    } else {
-      this.props.history.push('/dashboard');
+    if (JSON.parse(localStorage.getItem('user')) &&
+      JSON.parse(localStorage.getItem('user') !== '')) {
+      let user = JSON.parse(localStorage.getItem('user'));
+      const token = user.token.slice(user.token.indexOf(' ') + 1);
+      const currentUser = jwt.decode(token);
+      if (currentUser.role === 'Admin') {
+        this.props.history.push('/admin-dashboard');
+      } else {
+        this.props.history.push('/dashboard');
+      }
     }
   }
 
