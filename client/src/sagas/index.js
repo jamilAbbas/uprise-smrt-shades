@@ -1,5 +1,6 @@
 import { put, takeEvery, takeLatest, all } from "redux-saga/effects";
 import { notification, message } from "antd";
+import jwt from 'jsonwebtoken';
 
 import axios from "axios";
 
@@ -8,18 +9,36 @@ import * as constants from "../actions/constants";
 import * as actions from "../actions/auth-actions";
 import * as userQoutes from '../actions/create-qoute';
 
+function getUser(data) {
+  const token = data.token.slice(data.token.indexOf(' ') + 1);
+  return jwt.decode(token)
+}
+
 function* workerUserLogin(action) {
   try {
     const response = yield axios.post("/users/login", action.values);
     localStorage.setItem('user', JSON.stringify(response.data));
-    yield put(actions.loginSuccess(response.data));
-    // action.history.push('/dashboard');
-    notification.success({
-      message: "Success",
-      description: "Login Success",
-      placement: "bottomRight"
-    });
-    window.location.href = "/dashboard"
+    const user = getUser(response.data);
+    if (user.isActive) {
+      yield put(actions.loginSuccess(response.data));
+      // action.history.push('/dashboard');
+      notification.success({
+        message: "Success",
+        description: "Login Success",
+        placement: "bottomRight"
+      });
+      if (user.role === 'Admin') {
+        window.location.href = "/admin-dashboard"
+      } else {
+        window.location.href = "/dashboard"
+      }
+    } else {
+      notification.warning({
+        message: "Warning!!!",
+        description: "Please contect the uprise smart shade support team.",
+        placement: "bottomRight"
+      });
+    }
   } catch (error) {
     notification.error({
       message: "Login Failed",

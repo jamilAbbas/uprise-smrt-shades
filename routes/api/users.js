@@ -18,9 +18,8 @@ router.post("/register", (req, res) => {
       return res.status(400).json({ email: "Email already exists" });
     } else {
       let newUser = new User({
-        fullname: req.body.fullname,
         email: req.body.email,
-
+        fullname: req.body.fullname,
         password: req.body.password
       });
       bcrypt.genSalt(10, (err, salt) => {
@@ -53,8 +52,10 @@ router.post("/login", (req, res) => {
         // User Matched
         const payload = {
           id: user.id,
+          role: user.role,
+          email: user.email,
+          isActive: user.isActive,
           fullname: user.fullname,
-          email: user.email
         }; // Create JWT Payload
         // Sign Token
         jwt.sign(payload, key, { expiresIn: 3600 }, (err, token) => {
@@ -119,16 +120,34 @@ router.post("/delete", (req, res) => {
 // @access public
 router.put("/user/:id", async (req, res) => {
   User.findByIdAndUpdate(req.params.id,
-    {isActive: req.body.isActive})
-  .then(user => {
-    if(!user){
-      return res.json({msg:"update failed"})
-    }else {
-      return res.status(200).json(user)
-    }
-  }).catch(error => {
-    return res.status(500).json({error: error.toString()})
-  });
+    { isActive: req.body.isActive })
+    .then(user => {
+      if (!user) {
+        return res.json({ msg: "update failed" })
+      } else {
+        return res.status(200).json(user)
+      }
+    }).catch(error => {
+      return res.status(500).json({ error: error.toString() })
+    });
+});
+
+
+// @route PUT/api/user/id
+// @desc update specific user status
+// @access public
+router.put("/user/:id/role", async (req, res) => {
+  User.findByIdAndUpdate(req.params.id,
+    { role: req.body.role })
+    .then(user => {
+      if (!user) {
+        return res.json({ msg: "update failed" })
+      } else {
+        return res.status(200).json(user)
+      }
+    }).catch(error => {
+      return res.status(500).json({ error: error.toString() })
+    });
 });
 
 // @route GET/api/users/current
@@ -146,6 +165,21 @@ router.get(
     });
   }
 );
+
+
+// @route GET/api/user/all
+// @desc get all user
+// @access public
+
+router.get("/all", (req, res) => {
+  User.find().then(users => {
+    if (!users) {
+      return res.json({ msg: "No User available" });
+    } else {
+      return res.status(200).json(users);
+    }
+  });
+});
 
 
 
