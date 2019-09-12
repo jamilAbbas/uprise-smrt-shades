@@ -15,11 +15,18 @@ const { Header, Content, Sider } = Layout;
 class dashboard extends Component {
     
     state = { selectedUser: {} ,
-               activeQoutes: true, 
+               manageUser : true,
+               activeQoutes: false, 
                readyForManufacturing: false,
                submitForManufacturing: false, 
             }   
 
+    handleManageUSer =() => {
+        this.setState({manageUser: true,
+                      activeQoutes: false, 
+                      readyForManufacturing: false,
+                       submitForManufacturing: false,})
+    }
 
     handleActiveQoutes = () => {
         this.setState({activeQoutes : true,
@@ -55,6 +62,19 @@ class dashboard extends Component {
         return (
             <div>
                 <Layout>
+    {/* <Header className="header">
+      <div className="logo" />
+      <Menu
+        theme="dark"
+        mode="horizontal"
+        defaultSelectedKeys={['2']}
+        style={{ lineHeight: '64px' }}
+      >
+        <Menu.Item key="1">nav 1</Menu.Item>
+        <Menu.Item key="2">nav 2</Menu.Item>
+        <Menu.Item key="3">nav 3</Menu.Item>
+      </Menu>
+    </Header> */}
     <Layout>
       <Sider width={250} style={{ background: '#fff', minWidth: 900 }}>
         <Menu
@@ -63,6 +83,10 @@ class dashboard extends Component {
           defaultOpenKeys={['sub1']}
           style={{ height: '100%', borderRight: 0 }}
         >
+         <Menu.Item key="1" onClick ={this.handleManageUSer}>
+            <Icon type="user" />
+            <span>Manage Users</span>
+          </Menu.Item>
           <Menu.Item key="2" onClick={this.handleActiveQoutes}>
             <Icon type="check-square" />
             <span>Active Qoutes</span>
@@ -86,6 +110,37 @@ class dashboard extends Component {
             minHeight: 570,
           }}
         >
+        {
+            this.state.manageUser ?
+            <Row gutter={24}>
+          <Col span={15}>
+            <h1>Manage Users</h1>
+            <Spin spinning={dashboard.loading}>
+              <Table
+                onRow={(record, rowIndex) => {
+                  return {
+                    onClick: () => {
+                      this.setState({ selectedUser: record })
+                    }
+                  }
+                }}
+                columns={userColumns(this)}
+                pagination={{ pageSize: 5 }}
+                dataSource={[...dashboard.users]}
+              />
+            </Spin>
+          </Col>
+          <Col span={7}>
+            <h1>User Details</h1>
+            <div style={{ marginBottom: 15 }}>
+              <UserForm
+                user={this.state.selectedUser}
+                updateUserRole={(id, data) => this.props.updateRole(id, data)}
+              />
+            </div>
+          </Col>
+        </Row> : ""
+        }
         {
             this.state.activeQoutes ?
             <Row gutter={24}>
