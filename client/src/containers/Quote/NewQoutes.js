@@ -8,12 +8,20 @@ import {
     Form,
     Input,
     Select,
-    Divider
+    Modal,
+    Divider,
+    Tag
 } from "antd";
 import "./styles.css";
 import * as actions from "../../actions/create-qoute";
 
 class NewQoutes extends Component {
+    state ={
+        values: [],
+        price: 0,
+        showPrice: false,
+        modal2Visible: this.props.modal2Visible
+    }
     static propTypes = {
         prop: PropTypes
     };
@@ -28,7 +36,7 @@ class NewQoutes extends Component {
             if (!err) {
                 this.props.addQoute(values);
                 this.props.form.resetFields();
-                this.props.setModal2Visible();
+                this.props.setModal2Visible(false);
             }
         });
     };
@@ -36,13 +44,60 @@ class NewQoutes extends Component {
     handleReset = () => {
         this.props.form.resetFields();
     };
+    handleshowPrice =() => {
+        this.setState({showPrice : true})
+    }
+
+    setPrice =(val) => { 
+        let price = this.state.price;
+        let values = this.state.values;
+        const index = values.indexOf(val);
+        if(index == -1){
+            values.push(val)
+            price = price + val;
+        }
+       
+        this.setState({ price : price, values: values })
+    }
+
+    setModal2Visible(modal2Visible) {
+        this.setState({ modal2Visible });
+      }
 
     render() {
         const { form } = this.props;
         const { getFieldDecorator } = form;
         const { Option, OptGroup } = Select;
         return (
+            <Modal
+            centered
+            footer={null}
+            width={800}
+            closable={true}
+            maskClosable={false}
+            title="Create Qoutes"
+            visible={this.props.modal2Visible}
+            onOk={() => this.props.setModal2Visible(false)}
+            onCancel={() => this.props.setModal2Visible(false)}
+            style={{ maxHeight: "80vh", overflowY: "auto", borderRadius: 10 }}
+          >
             <Form className="ant-advanced-search-form" onSubmit={this.handleSubmit}>
+                <Row 
+                    style={{
+                        position: "fixed",
+                        top:72,  width:"48.5%",
+                        height: 54, marginLeft: -23, 
+                        borderBottom:"1px solid gray",
+                        borderTopLeftRadius: 5, 
+                        zIndex: 1000, backgroundColor:"white"
+                        }}>
+                            <h3 style ={{marginLeft: 22, marginTop: 12}}>Create Qoutes</h3>
+                            {
+                    this.state.showPrice ?
+                <Tag classNam="priceDiv" color="magenta" style={{marginLeft: 350, position:"absolute",  top: 6 }} >Price : ${this.state.price}</Tag>
+                : "" }
+                </Row> 
+                
                 <Row gutter={24} style={{ textAlign: "center" }}>
                     <h3>New Shades</h3>
                 </Row>
@@ -63,8 +118,8 @@ class NewQoutes extends Component {
                                     onChange={this.handleChange}
                                 >
                                     <Option value="-">- </Option>
-                                    <Option value="Manual">Manual</Option>
-                                    <Option value="Motorize">Motorize</Option>
+                                    <Option value="Manual" onClick ={() => this.setPrice(20)}>Manual</Option>
+                                    <Option value="Motorize" onClick ={() => this.setPrice(30)}>Motorize</Option>
                                 </Select>
                             )}
                         </Form.Item>
@@ -81,8 +136,8 @@ class NewQoutes extends Component {
                             })(
                                 <Select style={{ width: 200 }} onChange={this.handleChange}>
                                     <Option value="-">-</Option>
-                                    <Option value="Single">Single</Option>
-                                    <Option value="Duel">Duel</Option>
+                                    <Option value="Single" onClick ={() => this.setPrice(6)}>Single</Option>
+                                    <Option value="Duel" onClick ={() => this.setPrice(12)}>Duel</Option>
                                 </Select>
                             )}
                         </Form.Item>
@@ -102,13 +157,13 @@ class NewQoutes extends Component {
                                     addonAfter={
                                         <Select style={{ width: 70 }} onChange={this.handleChange}>
                                             <Option value="0">0</Option>
-                                            <Option value="1/8">1/8</Option>
-                                            <Option value="1/4">1/4</Option>
-                                            <Option value="3/8">3/8</Option>
-                                            <Option value="1/2">1/2</Option>
-                                            <Option value="5/8">5/8</Option>
-                                            <Option value="3/4">3/4</Option>
-                                            <Option value="7/8">7/8</Option>
+                                            <Option value="1/8" onClick ={() => this.setPrice(4)}>1/8</Option>
+                                            <Option value="1/4" onClick ={() => this.setPrice(7)}>1/4</Option>
+                                            <Option value="3/8" onClick ={() => this.setPrice(9)}>3/8</Option>
+                                            <Option value="1/2" onClick ={() => this.setPrice(11)}>1/2</Option>
+                                            <Option value="5/8" onClick ={() => this.setPrice(13)}>5/8</Option>
+                                            <Option value="3/4" onClick ={() => this.setPrice(14)}>3/4</Option>
+                                            <Option value="7/8" onClick ={() => this.setPrice(15)}>7/8</Option>
                                         </Select>
                                     }
                                 />
@@ -130,13 +185,13 @@ class NewQoutes extends Component {
                                     addonAfter={
                                         <Select style={{ width: 70 }} onChange={this.handleChange}>
                                             <Option value="0">0</Option>
-                                            <Option value="1/8">1/8</Option>
-                                            <Option value="1/4">1/4</Option>
-                                            <Option value="3/8">3/8</Option>
-                                            <Option value="1/2">1/2</Option>
-                                            <Option value="5/8">5/8</Option>
-                                            <Option value="3/4">3/4</Option>
-                                            <Option value="7/8">7/8</Option>
+                                            <Option value="1/8" onClick ={() => this.setPrice(17)}>1/8</Option>
+                                            <Option value="1/4" onClick ={() => this.setPrice(18)}>1/4</Option>
+                                            <Option value="3/8" onClick ={() => this.setPrice(19)}>3/8</Option>
+                                            <Option value="1/2" onClick ={() => this.setPrice(21)}>1/2</Option>
+                                            <Option value="5/8" onClick ={() => this.setPrice(22)}>5/8</Option>
+                                            <Option value="3/4" onClick ={() => this.setPrice(23)}>3/4</Option>
+                                            <Option value="7/8" onClick ={() => this.setPrice(24)}>7/8</Option>
                                         </Select>
                                     }
                                 />
@@ -154,9 +209,9 @@ class NewQoutes extends Component {
                                 ],
                             })(
                                 <Select style={{ width: 200 }} onChange={this.handleChange}>
-                                    <Option value="jack">Jack</Option>
-                                    <Option value="lucy">Lucy</Option>
-                                    <Option value="Yiminghe">yiminghe</Option>
+                                    <Option value="jack" onClick ={() => this.setPrice(25)}>Jack</Option>
+                                    <Option value="lucy" onClick ={() => this.setPrice(26)}>Lucy</Option>
+                                    <Option value="Yiminghe" onClick ={() => this.setPrice(27)}>yiminghe</Option>
                                 </Select>
                             )}
                         </Form.Item>
@@ -172,9 +227,9 @@ class NewQoutes extends Component {
                                 ],
                             })(
                                 <Select style={{ width: 200 }} onChange={this.handleChange}>
-                                    <Option value="jack">Jack</Option>
-                                    <Option value="lucy">Lucy</Option>
-                                    <Option value="Yiminghe">yiminghe</Option>
+                                    <Option value="jack" onClick ={() => this.setPrice(1)}>Jack</Option>
+                                    <Option value="lucy" onClick ={() => this.setPrice(2)}>Lucy</Option>
+                                    <Option value="Yiminghe" onClick ={() => this.setPrice(3)}>yiminghe</Option>
                                 </Select>
                             )}
                         </Form.Item>
@@ -198,14 +253,14 @@ class NewQoutes extends Component {
                                 <Select defaultValue="-" style={{ width: 200 }} onChange={this.handleChange}>
                                     <Option value="-">- </Option>
                                     <OptGroup label="Facica">
-                                        <Option value="Facica 3 in.">Facica 3 in.</Option>
-                                        <Option value="Facica 4 in.">Facica 4 in.</Option>
-                                        <Option value="Facica 5 in.">Facica 5 in.</Option>
-                                        <Option value="Facica 7 in.">Facica 7 in.</Option>
+                                        <Option value="Facica 3 in." onClick ={() => this.setPrice(31)}>Facica 3 in.</Option>
+                                        <Option value="Facica 4 in." onClick ={() => this.setPrice(32)}>Facica 4 in.</Option>
+                                        <Option value="Facica 5 in." >Facica 5 in.</Option>
+                                        <Option value="Facica 7 in." >Facica 7 in.</Option>
                                     </OptGroup>
                                     <OptGroup label="Cassette">
-                                        <Option value="Cassette 3 in.">Cassette 80</Option>
-                                        <Option value="Cassette 4 in.">Cassette 100</Option>
+                                        <Option value="Cassette 3 in." onClick ={() => this.setPrice(34)}>Cassette 80</Option>
+                                        <Option value="Cassette 4 in." onClick ={() => this.setPrice(33)}>Cassette 100</Option>
                                         <Option value="Cassette 5 in.">Cassette 120</Option>
                                     </OptGroup>
                                 </Select>
@@ -224,8 +279,8 @@ class NewQoutes extends Component {
                             })(
                                 <Select defaultValue="-" style={{ width: 200 }} onChange={this.handleChange}>
                                     <Option value="">-</Option>
-                                    <Option value="Anodized">Anodized</Option>
-                                    <Option value="White">White</Option>
+                                    <Option value="Anodized" onClick ={() => this.setPrice(35)}>Anodized</Option>
+                                    <Option value="White" onClick ={() => this.setPrice(36)}>White</Option>
                                     <Option value="Vanilla">Vanilla</Option>
                                     <Option value="Bronze">Bronze</Option>
                                     <Option value="Black">Black</Option>
@@ -250,8 +305,8 @@ class NewQoutes extends Component {
                                 ],
                             })(
                                 <Select defaultValue="-" style={{ width: 200 }} onChange={this.handleChange}>
-                                    <Option value="-">-</Option>
-                                    <Option value="Manual">Manual</Option>
+                                    <Option value="-" onClick ={() => this.setPrice(37)}>-</Option>
+                                    <Option value="Manual" onClick ={() => this.setPrice(38)}>Manual</Option>
                                     <Option value="Motorize">Motorize</Option>
                                 </Select>
                             )}
@@ -269,8 +324,8 @@ class NewQoutes extends Component {
                             })(
                                 <Select defaultValue="-" style={{ width: 200 }} onChange={this.handleChange}>
                                     <Option value="-">-</Option>
-                                    <Option value="Standard Roll">Standard Roll</Option>
-                                    <Option value="Reverse Roll">Reverse Roll</Option>
+                                    <Option value="Standard Roll" onClick ={() => this.setPrice(42)}>Standard Roll</Option>
+                                    <Option value="Reverse Roll" onClick ={() => this.setPrice(41)}>Reverse Roll</Option>
                                 </Select>
                             )}
                         </Form.Item>
@@ -293,8 +348,8 @@ class NewQoutes extends Component {
                                     ],
                                 })(
                                     <Select defaultValue="-" style={{ width: 200 }} onChange={this.handleChange}>
-                                        <Option value="28 mm Hardwired RF Motor">28 mm Hardwired RF Motor</Option>
-                                        <Option value="28 mm Li-Ion RF">28 mm Li-Ion RF</Option>
+                                        <Option value="28 mm Hardwired RF Motor" onClick ={() => this.setPrice(45)}>28 mm Hardwired RF Motor</Option>
+                                        <Option value="28 mm Li-Ion RF" onClick ={() => this.setPrice(46)}>28 mm Li-Ion RF</Option>
                                         <Option value="35 mm AC RF">35 mm AC RF</Option>
                                         <Option value="45 mm AC RF">45 mm AC RF</Option>
                                         <Option value="45 mm Li-Ion RF">45 mm Li-Ion RF</Option>
@@ -313,8 +368,8 @@ class NewQoutes extends Component {
                                     ],
                                 })(
                                     <Select defaultValue="-" style={{ width: 200 }} onChange={this.handleChange}>
-                                        <Option value="">-</Option><Option value="Hardwired">Hardwired</Option>
-                                        <Option value="Solar Panel - 3 Watt" disabled="true">Solar Panel - 3 Watt</Option>
+                                        <Option value="">-</Option><Option value="Hardwired" onClick ={() => this.setPrice(55)}>Hardwired</Option>
+                                        <Option value="Solar Panel - 3 Watt" disabled="true" onClick ={() => this.setPrice(56)}>Solar Panel - 3 Watt</Option>
                                         <Option value="Internal Battery" disabled="true">Internal Battery</Option>
                                         <Option value="External Li-Ion Battery">External Li-Ion Battery</Option>
                                     </Select>
@@ -339,8 +394,8 @@ class NewQoutes extends Component {
                                         ],
                                     })(
                                         <Select defaultValue="-" style={{ width: 200 }} onChange={this.handleChange}>
-                                            <Option value="Internal / Sealed">Internal / Sealed</Option>
-                                            <Option value="External / Fabric Wrapped">External / Fabric Wrapped</Option>
+                                            <Option value="Internal / Sealed" onClick ={() => this.setPrice(57)}>Internal / Sealed</Option>
+                                            <Option value="External / Fabric Wrapped" onClick ={() => this.setPrice(58)}>External / Fabric Wrapped</Option>
                                             <Option value="External / Metal">External / Metal</Option>
                                         </Select>
                                     )}
@@ -357,8 +412,8 @@ class NewQoutes extends Component {
                                         ],
                                     })(
                                         <Select defaultValue="-" style={{ width: 200 }} onChange={this.handleChange}>
-                                            <Option value="">-</Option>
-                                            <Option value="Anodized">Anodized</Option>
+                                            <Option value="" onClick ={() => this.setPrice(59)}>-</Option>
+                                            <Option value="Anodized" onClick ={() => this.setPrice(60)}>Anodized</Option>
                                             <Option value="White">White</Option>
                                             <Option value="Vanilla">Vanilla</Option>
                                             <Option value="Bronze">Bronze</Option>
@@ -441,18 +496,20 @@ class NewQoutes extends Component {
                         </Row>
                     </Row>
                     <Col span={24} style={{ textAlign: 'right' }}>
+                        <Button onClick ={this.handleshowPrice} style={{marginRight: 8}}>Estimate Price</Button>
                         <Button type="primary" htmlType="submit">
                             Create
                         </Button>
                         <Button style={{ marginLeft: 8 }} onClick={this.handleReset}>
                             Clear
                         </Button>
-                        <Button style={{ marginLeft: 8 }} onClick={() => this.props.setModal2Visible()}>
+                        <Button style={{ marginLeft: 8 }} onClick={() => this.props.setModal2Visible(false)}>
                             Close
                         </Button>
                     </Col>
                 </Row>
             </Form>
+            </Modal>
         );
     }
 }

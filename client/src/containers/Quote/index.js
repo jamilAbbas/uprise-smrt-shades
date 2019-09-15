@@ -5,11 +5,9 @@ import {
   Col,
   Table,
   Button,
-  Modal,
   Form,
   Input,
   Select,
-  Divider
 } from "antd";
 
 import * as actions from "../../actions/create-qoute";
@@ -18,15 +16,14 @@ import "./styles.css";
 import NewQoutes from "./NewQoutes";
 
 
-class Quote extends React.Component {
-  state = {
+class Quote extends React.Component {  
+  state ={
     modal2Visible: false
-  };
-
+  }
   setModal2Visible(modal2Visible) {
+    console.log(modal2Visible);
     this.setState({ modal2Visible });
   }
-
   render() {
     const { data, form } = this.props;
     const { getFieldDecorator } = form;
@@ -91,7 +88,7 @@ class Quote extends React.Component {
                 <Button
                   type="primary"
                   icon="edit"
-                // onClick={() => this.setModal2Visible(true)}
+                  onClick={() => this.setModal2Visible(true)}
                 >
                   Edit
                 </Button>
@@ -164,27 +161,13 @@ class Quote extends React.Component {
           </Col>
           <Col span={1} />
         </Row>
-        <Modal
-          centered
-          footer={null}
-          width={800}
-          closable={true}
-          maskClosable={false}
-          title="Create Qoutes"
-          visible={this.state.modal2Visible}
-          onOk={() => this.setModal2Visible(false)}
-          onCancel={() => this.setModal2Visible(false)}
-          style={{ maxHeight: "80vh", overflowY: "auto", borderRadius: 10 }}
-        >
           <div>
             <NewQoutes
-              setModal2Visible={() => {
-                this.setState({ modal2Visible: false })
-              }}
+              modal2Visible = {this.state.modal2Visible}
               addQoute={data => this.props.addQoute(data)}
+              setModal2Visible={val => this.setModal2Visible(val)}
             />
           </div>
-        </Modal>
       </div>
     );
   }
