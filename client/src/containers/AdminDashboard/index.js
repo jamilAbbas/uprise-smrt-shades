@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { Layout, Menu,  Icont, Row, Col, Icon, Table, Tag, Button, Spin, Divider  } from 'antd';
+import { Layout, Menu, Row, Col, Icon, Table, Tag, Button, Spin, Divider ,Avatar, Badge, Tooltip } from 'antd';
 import { columns } from './tableColumns';
 import UserForm from './UserForm';
 import { userColumns } from './userTableColums'
 import * as actions from '../../actions/get-qoutes';
-import { flush } from 'redux-saga/effects';
+import './styles.css'
 
 
 const { SubMenu } = Menu;
@@ -18,13 +18,16 @@ class dashboard extends Component {
                activeQoutes: false, 
                readyForManufacturing: false,
                submitForManufacturing: false, 
+               mamagePrice: false
             }   
 
     handleManageUSer =() => {
         this.setState({manageUser: true,
                       activeQoutes: false, 
                       readyForManufacturing: false,
-                       submitForManufacturing: false,})
+                      submitForManufacturing: false,
+                      mamagePrice: false
+                    })
     }
 
     handleActiveQoutes = () => {
@@ -32,6 +35,7 @@ class dashboard extends Component {
                        manageUser: false,
                        readyForManufacturing: false,
                        submitForManufacturing: false,
+                       mamagePrice: false
         })
     }
     handleReadyForManufacturing = () => {
@@ -39,7 +43,8 @@ class dashboard extends Component {
                        readyForManufacturing: true,
                        submitForManufacturing: false,
                        activeQoutes : false,
-                       manageUser: false
+                       manageUser: false,
+                       mamagePrice: false
         })
     }
     handleSubmitForManufacturing = () => {
@@ -47,9 +52,20 @@ class dashboard extends Component {
                        readyForManufacturing: false,
                        submitForManufacturing: true,
                        activeQoutes : false,
-                       manageUser: false
+                       manageUser: false,
+                       mamagePrice: false
         })
     }
+    handleManagePrice = () => {
+      this.setState({
+                     mamagePrice: true,
+                     readyForManufacturing: false,
+                     submitForManufacturing: false,
+                     activeQoutes : false,
+                     manageUser: false,
+      })
+  }
+
 
     componentDidMount() {
         this.props.fetchList();
@@ -61,21 +77,11 @@ class dashboard extends Component {
         return (
             <div>
                 <Layout>
-    {/* <Header className="header">
-      <div className="logo" />
-      <Menu
-        theme="dark"
-        mode="horizontal"
-        defaultSelectedKeys={['2']}
-        style={{ lineHeight: '64px' }}
-      >
-        <Menu.Item key="1">nav 1</Menu.Item>
-        <Menu.Item key="2">nav 2</Menu.Item>
-        <Menu.Item key="3">nav 3</Menu.Item>
-      </Menu>
-    </Header> */}
     <Layout>
       <Sider width={250} style={{ background: '#fff', minWidth: 900 }}>
+      <Avatar size={84} icon="user"  style={{marginLeft: 80, marginTop: 10}}/>
+      <h3 style={{margin: "auto", width:60}}>Admin</h3>
+      <Divider/>
         <Menu
           mode="inline"
           defaultSelectedKeys={['1']}
@@ -86,21 +92,25 @@ class dashboard extends Component {
             <Icon type="user" />
             <span>Manage Users</span>
           </Menu.Item>
-          <Menu.Item key="2" onClick={this.handleActiveQoutes}>
+          <Menu.Item key="2" onClick={this.handleManagePrice}>
+            <Icon type="dollar" />
+            <span>Manage Price</span>
+          </Menu.Item>
+          <Menu.Item key="3" onClick={this.handleActiveQoutes}>
             <Icon type="check-square" />
             <span>Active Qoutes</span>
           </Menu.Item>
-          <Menu.Item key="3" onClick={this.handleReadyForManufacturing}>
+          <Menu.Item key="4" onClick={this.handleReadyForManufacturing}>
             <Icon type="carry-out" />
             <span>Ready For Manufacturing</span>
           </Menu.Item>
-          <Menu.Item key="4" onClick={this.handleSubmitForManufacturing}>
+          <Menu.Item key="5" onClick={this.handleSubmitForManufacturing}>
             <Icon type="upload" />
             <span>Submit For Manufacturing</span>
           </Menu.Item>
         </Menu>
       </Sider>
-      <Layout style={{ padding: '0 24px 24px' }}>
+      <Layout style={{ padding: '24px 24px 24px' }}>
         <Content
           style={{
             background: '#fff',
@@ -109,6 +119,22 @@ class dashboard extends Component {
             minHeight: 570,
           }}
         >
+          <h1>Dashboard</h1>
+          <div style={{
+            border: "1px solid red",
+            padding: 10,
+            height: 130,
+          }}>
+            <div className="card">
+            <Tooltip title="Users">
+            </Tooltip>,
+            <Icon type="user" style={{fontSize:30, float:"left"}}/> 
+              <h1 style={{fontSize: 20, fontWeight:900, float:"right"}}>593</h1>
+              <Divider/>
+              <p style={{border:"1px solid red", fontSize:16, width: 35, float:"left"}}>New</p>
+              <Badge count={109} style={{ backgroundColor: '#52c41a' , float:"right" }} />
+            </div>
+            </div>
         {
             this.state.manageUser ?
             <Row gutter={24}>
@@ -139,6 +165,12 @@ class dashboard extends Component {
             </div>
           </Col>
         </Row> : ""
+        }
+        {
+          this.state.mamagePrice ?
+          <Row>
+           <h1>hello</h1>
+          </Row> : ""
         }
         {
             this.state.activeQoutes ?

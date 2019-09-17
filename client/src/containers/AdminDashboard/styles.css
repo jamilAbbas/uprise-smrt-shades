@@ -21,3 +21,10 @@
   border: 1px solid;
   padding: 5px;
 }
+.card{
+  border:1px solid gray;
+  height: 110px;
+  width: 150px;
+  padding: 3px;
+  border-radius: 5px;
+}

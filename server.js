@@ -19,10 +19,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //User Routes
-app.use("/users", users);
+app.use("/api/users", users);
 
 //Quote Routes
-app.use("/quotes", quotes);
+app.use("/api/quotes", quotes);
 
 //DB config
 const db = require("./config/keys").mongoURI;
