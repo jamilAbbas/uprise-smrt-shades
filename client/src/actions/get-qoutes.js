@@ -13,7 +13,7 @@ export function fetchListRequest() {
         type: constants.FETCH_LIST_REQUEST,
         id: user.id,
     }
-}
+} 
 
 export function fetchListSuccess(data) {
     return {

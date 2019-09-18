@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { Layout, Menu, Row, Col, Icon, Table, Tag, Button, Spin, Divider ,Avatar, Badge, Tooltip } from 'antd';
 import { columns } from './tableColumns';
 import UserForm from './UserForm';
-import { userColumns } from './userTableColums'
+import { userColumns } from './userTableColums';
+import ManagePrice from './ManagePrice'
 import * as actions from '../../actions/get-qoutes';
 import './styles.css'
 
@@ -119,22 +120,6 @@ class dashboard extends Component {
             minHeight: 570,
           }}
         >
-          <h1>Dashboard</h1>
-          <div style={{
-            border: "1px solid red",
-            padding: 10,
-            height: 130,
-          }}>
-            <div className="card">
-            <Tooltip title="Users">
-            </Tooltip>,
-            <Icon type="user" style={{fontSize:30, float:"left"}}/> 
-              <h1 style={{fontSize: 20, fontWeight:900, float:"right"}}>593</h1>
-              <Divider/>
-              <p style={{border:"1px solid red", fontSize:16, width: 35, float:"left"}}>New</p>
-              <Badge count={109} style={{ backgroundColor: '#52c41a' , float:"right" }} />
-            </div>
-            </div>
         {
             this.state.manageUser ?
             <Row gutter={24}>
@@ -169,7 +154,7 @@ class dashboard extends Component {
         {
           this.state.mamagePrice ?
           <Row>
-           <h1>hello</h1>
+          < ManagePrice/>
           </Row> : ""
         }
         {

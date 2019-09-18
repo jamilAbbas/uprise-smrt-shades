@@ -8,6 +8,7 @@ import * as qoutes from "../actions/get-qoutes";
 import * as constants from "../actions/constants";
 import * as actions from "../actions/auth-actions";
 import * as userQoutes from '../actions/create-qoute';
+import * as prices from '../actions/price-action';
 
 function getUser(data) {
   const token = data.token.slice(data.token.indexOf(' ') + 1);
@@ -125,6 +126,18 @@ function* workerUpdateRole(action) {
   }
 }
 
+function* workerSetPrice({ data }) {
+  console.log("Prices:::", data)
+  try {
+    const response = yield axios.put(`/users/set-proces`, data);
+    yield put(prices.setPriceSuccess(response.data));
+    message.success("Set pricess successfully!");
+  } catch (error) {
+    message.error("Some thing wrong with the request!");
+    yield put(prices.setPriceFailure(error.message));
+  }
+}
+
 function* watchAll() {
   yield all([
     takeLatest(constants.USER_LOGIN_REQUEST, workerUserLogin),
@@ -134,6 +147,7 @@ function* watchAll() {
     takeLatest(constants.USER_SIGNUP_REQUEST, workerUserRegester),
     takeLatest(constants.FETCH_LIST_REQUEST, workerFetchUserQoutes),
     takeLatest(constants.FETCH_USER_LIST_REQUEST, workerFetchUserList),
+    takeLatest(constants.SET_PRICE_REQUEST, workerSetPrice),
   ]);
 }
 
