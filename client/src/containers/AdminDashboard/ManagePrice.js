@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import React, { Component } from "react";
-import { Row, Col, Form, message, Input, Button } from "antd";
+import { Row, Col, Form, Input, Button } from "antd";
 
 import * as actions from '../../actions/price-action';
 
@@ -11,13 +11,16 @@ const formItemLayout = {
   },
   wrapperCol: {
     xs: { span: 24 },
-    sm: { span: 4 }
+		sm: { span: 4 }
   }
 };
 
 class ManagePrice extends Component {
 
-	
+  componentDidMount (){
+    this.props.getPrice();
+  }
+  
 	handleSubmit = e => {
 		e.preventDefault();
 		this.props.form.validateFieldsAndScroll((err, values) => {
@@ -28,7 +31,8 @@ class ManagePrice extends Component {
 };
 
   render() {
-    const { form } = this.props;
+    const { form, price } = this.props;
+    console.log(price, '0-0-0-0-0-0-0');
     const { getFieldDecorator } = form;
     return (
       <div>
@@ -42,8 +46,8 @@ class ManagePrice extends Component {
               <h1>Fabrics</h1>
             </div>
             <Col span={6}>
-						<Form.Item label="Type1">
-                   {getFieldDecorator("type1", {
+						<Form.Item label="Avila">
+                   {getFieldDecorator("avila", {
                        rules: [
                             {
                              required: true,
@@ -56,8 +60,8 @@ class ManagePrice extends Component {
                    </Form.Item>
             </Col>
             <Col span={6}>
-						<Form.Item label="Type2">
-                   {getFieldDecorator("type2", {
+						<Form.Item label="Deco">
+                   {getFieldDecorator("deco", {
                        rules: [
                             {
                              required: true,
@@ -76,7 +80,7 @@ class ManagePrice extends Component {
             </div>
             <Col span={6}>
 						<Form.Item label="Manual">
-                   {getFieldDecorator("Manual", {
+                   {getFieldDecorator("manual", {
                        rules: [
                             {
                              required: true,
@@ -122,8 +126,8 @@ class ManagePrice extends Component {
                    </Form.Item>
             </Col>
             <Col span={6}>
-						<Form.Item label="Dual">
-                   {getFieldDecorator("dual", {
+						<Form.Item label="Duel">
+                   {getFieldDecorator("duel", {
                        rules: [
                             {
                              required: true,
@@ -156,7 +160,7 @@ class ManagePrice extends Component {
             </Col>
             <Col span={8}>
 						<Form.Item label="External Li-lon Battery">
-                   {getFieldDecorator("li-lon", {
+                   {getFieldDecorator("lilon", {
                        rules: [
                             {
                              required: true,
@@ -175,7 +179,7 @@ class ManagePrice extends Component {
             </div>
             <Col span={6}>
 						<Form.Item label="Per Square Feet">
-                   {getFieldDecorator("dimention", {
+                   {getFieldDecorator("perSquare", {
                        rules: [
                             {
                              required: true,
@@ -188,7 +192,7 @@ class ManagePrice extends Component {
                    </Form.Item>
             </Col>
           </Row>
-					<Row>
+					<Row> 
 						<Col span={8} />
 						<Col span={8}>
 							<Button type="primary" htmlType="submit">
@@ -204,17 +208,18 @@ class ManagePrice extends Component {
 }
 const WrappedQuoteForm = Form.create({ name: "quote_form" })(ManagePrice);
 
-// const mapStateToProps = state = ({
-// 	state,
-// });
+const mapStateToProps = state => ({
+  price: state.price
+});
 
 const mapDispatchToProps = dispatch => {
 	return {
-		setPrice: data => dispatch(actions.setPriceRequest(data))
+    setPrice: data => dispatch(actions.setPriceRequest(data)), 
+    getPrice: () => dispatch(actions.getPriceRequest())
 	}
 }
 
 export default connect(
-	null,
+	mapStateToProps,
 	mapDispatchToProps,
 )(WrappedQuoteForm);

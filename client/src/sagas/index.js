@@ -129,7 +129,7 @@ function* workerUpdateRole(action) {
 function* workerSetPrice({ data }) {
   console.log("Prices:::", data)
   try {
-    const response = yield axios.put(`/users/set-proces`, data);
+    const response = yield axios.post(`/prices/create`, data);
     yield put(prices.setPriceSuccess(response.data));
     message.success("Set pricess successfully!");
   } catch (error) {
@@ -137,6 +137,20 @@ function* workerSetPrice({ data }) {
     yield put(prices.setPriceFailure(error.message));
   }
 }
+
+function* workerGetPrice( ) {
+  try {
+    const response = yield axios.get(`/prices`);
+    console.log("Prices:::", response)
+    yield put(prices.getPriceSuccess(response.data));
+    message.success("Set pricess successfully!");
+  } catch (error) {
+    message.error("Some thing wrong with the request!");
+    yield put(prices.getPriceFailure(error.message));
+  }
+}
+
+
 
 function* watchAll() {
   yield all([
@@ -148,6 +162,7 @@ function* watchAll() {
     takeLatest(constants.FETCH_LIST_REQUEST, workerFetchUserQoutes),
     takeLatest(constants.FETCH_USER_LIST_REQUEST, workerFetchUserList),
     takeLatest(constants.SET_PRICE_REQUEST, workerSetPrice),
+    takeLatest(constants.GET_PRICE_REQUEST, workerGetPrice),
   ]);
 }
 
