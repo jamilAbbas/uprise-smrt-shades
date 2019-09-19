@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 app.use("/users", users);
 
 //Quote Routes
-app.use("/api/quotes", quotes);
+app.use("/quotes", quotes);
 //Price Routes
 app.use("/prices", prices);
 
