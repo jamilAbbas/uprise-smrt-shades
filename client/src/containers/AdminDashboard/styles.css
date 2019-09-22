@@ -1,6 +1,8 @@
 .dashboardContainer {
   padding: 1rem;
   background: lightgray;
+  padding-top: 2rem !important;
+  padding-bottom: 2rem !important;
 }
 .manageUsersContainer {
   width: 17rem;

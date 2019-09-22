@@ -16,8 +16,8 @@ import "./styles.css";
 import NewQoutes from "./NewQoutes";
 
 
-class Quote extends React.Component {  
-  state ={
+class Quote extends React.Component {
+  state = {
     modal2Visible: false
   }
   setModal2Visible(modal2Visible) {
@@ -88,7 +88,9 @@ class Quote extends React.Component {
                 <Button
                   type="primary"
                   icon="edit"
-                  onClick={() => this.setModal2Visible(true)}
+                  onClick={() => {
+                    // this.setModal2Visible(true)
+                  }}
                 >
                   Edit
                 </Button>
@@ -161,13 +163,13 @@ class Quote extends React.Component {
           </Col>
           <Col span={1} />
         </Row>
-          <div>
-            <NewQoutes
-              modal2Visible = {this.state.modal2Visible}
-              addQoute={data => this.props.addQoute(data)}
-              setModal2Visible={val => this.setModal2Visible(val)}
-            />
-          </div>
+        <div>
+          <NewQoutes
+            modal2Visible={this.state.modal2Visible}
+            addQoute={data => this.props.addQoute(data)}
+            setModal2Visible={val => this.setModal2Visible(val)}
+          />
+        </div>
       </div>
     );
   }
