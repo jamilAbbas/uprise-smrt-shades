@@ -91,7 +91,6 @@ router.get(
 // @access private
 
 router.get("/all", (req, res) => {
-  console.log("all usres");
   User.find().then(users => {
     if (!users) {
       res.json("No registered Users found");

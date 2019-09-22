@@ -40,6 +40,10 @@ const PriceSchema = new Schema({
     perSquare: {
       type: Number
     }
+  },
+  userId: {
+    type: String,
+    required: true
   }
 });
 
