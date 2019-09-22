@@ -13,7 +13,7 @@ export function setPriceRequest(data) {
         type: constants.SET_PRICE_REQUEST,
         data: {
             ...data,
-            userId: user._id
+            userId: user.id
         },
     }
 }

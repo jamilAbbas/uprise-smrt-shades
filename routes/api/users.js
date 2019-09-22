@@ -12,7 +12,6 @@ router.get("/test", (req, res) => res.json({ msg: "User working!" }));
 // @desc register user
 // @access public
 router.post("/register", (req, res) => {
-  console.log(req.body.email);
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
       return res.status(400).json({ email: "Email already exists" });
@@ -42,7 +41,6 @@ router.post("/register", (req, res) => {
 router.post("/login", (req, res) => {
   const email = req.body.username;
   const password = req.body.password;
-  console.log("email", email);
   User.findOne({ email }).then(user => {
     if (!user) {
       return res.status(404).json({ email: "User not found" });

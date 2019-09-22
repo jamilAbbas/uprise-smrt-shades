@@ -138,14 +138,13 @@ function* workerSetPrice({ data }) {
   }
 }
 
-function* workerGetPrice( ) {
+function* workerGetPrice() {
   try {
     const response = yield axios.get(`/prices`);
-    console.log("Prices:::", response)
     yield put(prices.getPriceSuccess(response.data));
     message.success("Set pricess successfully!");
   } catch (error) {
-    message.error("Some thing wrong with the request!");
+    message.error("Unable to fetch price details!");
     yield put(prices.getPriceFailure(error.message));
   }
 }
