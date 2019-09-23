@@ -4,18 +4,20 @@
   margin-top: 2rem;
 }
 .quotesform {
-  width: 24rem;
-  background: whitesmoke;
+  width: 90%;
   height: auto;
-  border: 1px solid grey;
-  padding: 2rem;
+  margin: 0px auto;
+  padding: 20px 0px;
   border-radius: 10px;
+  margin-bottom: 35px;
+  background: whitesmoke;
+  border: 1px solid grey;
 }
 .propAddress {
+  width: 28rem;
   padding: 2rem;
   height: 13rem;
   border-radius: 10px;
-  width: 28rem;
   border: 1px solid grey;
   background: whitesmoke;
 }

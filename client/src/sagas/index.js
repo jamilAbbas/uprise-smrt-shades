@@ -149,6 +149,17 @@ function* workerGetPrice() {
   }
 }
 
+function* workerSetValues({ values }) {
+  try {
+    const response = yield axios.post(`/quote-detail/create`, values);
+    yield put(userQoutes.setValuesSuccess(response.data));
+    message.success("Set values successfully!");
+  } catch (error) {
+    message.error("Unable to fetch price details!");
+    yield put(userQoutes.setValuesError(error.message));
+  }
+}
+
 
 
 function* watchAll() {
@@ -162,6 +173,7 @@ function* watchAll() {
     takeLatest(constants.FETCH_USER_LIST_REQUEST, workerFetchUserList),
     takeLatest(constants.SET_PRICE_REQUEST, workerSetPrice),
     takeLatest(constants.GET_PRICE_REQUEST, workerGetPrice),
+    takeLatest(constants.SET_DETAILS_REQUEST, workerSetValues),
   ]);
 }
 

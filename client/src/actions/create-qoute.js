@@ -28,3 +28,27 @@ export function createQouteError(error) {
         error
     }
 }
+
+export function setValuesRequest(data) {
+    const user = getUser();
+    return {
+        type: constants.SET_DETAILS_REQUEST,
+        values: {
+            ...data, userId: user.id
+        }
+    }
+}
+
+export function setValuesSuccess(data) {
+    return {
+        type: constants.SET_DETAILS_SUCCESS,
+        data
+    }
+}
+
+export function setValuesError(error) {
+    return {
+        type: constants.SET_DETAILS_ERROR,
+        error
+    }
+}

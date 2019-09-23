@@ -7,6 +7,7 @@ const path = require("path");
 const users = require("./routes/api/users");
 const quotes = require("./routes/api/qoutes");
 const prices = require("./routes/api/prices");
+const quoteDetail = require("./routes/api/quote-details");
 const app = express();
 
 // Passport middleware
@@ -26,6 +27,8 @@ app.use("/users", users);
 app.use("/quotes", quotes);
 //Price Routes
 app.use("/prices", prices);
+//Quote Details Routes
+app.use("/quote-detail", quoteDetail);
 
 //DB config
 const db = require("./config/keys").mongoURI;

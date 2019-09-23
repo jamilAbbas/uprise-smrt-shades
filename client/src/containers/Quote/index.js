@@ -18,86 +18,143 @@ import NewQoutes from "./NewQoutes";
 
 class Quote extends React.Component {
   state = {
-    modal2Visible: false
+    modal2Visible: false,
+    disabled: true,
   }
   setModal2Visible(modal2Visible) {
     console.log(modal2Visible);
     this.setState({ modal2Visible });
   }
+
+  handleSubmit = e => {
+    e.preventDefault();
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        this.props.setValues(values);
+      }
+    });
+  };
+
   render() {
     const { data, form } = this.props;
     const { getFieldDecorator } = form;
-    const { Option, OptGroup } = Select;
 
     return (
       <div className="dashboardContainer">
-        <Row>
-          <Col offset={1} span={6}>
-            <div className="quotesform">
-              <Form layout="vertical">
-                <Form.Item label="Quote Title">
-                  {getFieldDecorator("title", {
-                    rules: [
-                      {
-                        required: false,
-                        message: "Please input the title of collection!"
-                      }
-                    ]
-                  })(<Input />)}
-                </Form.Item>
-                <Form.Item label="Reference #">
-                  {getFieldDecorator("description")(<Input />)}
-                </Form.Item>
-                <Form.Item label="Notes">
-                  {getFieldDecorator("description")(<Input />)}
-                </Form.Item>
-                <Form.Item label="Territory">
-                  {getFieldDecorator("description")(<Input />)}
-                </Form.Item>
-              </Form>
-            </div>
-          </Col>
-          <Col offset={2} span={8}>
-            <div className="propAddress">
+        <div className="quotesform">
+          <Row>
+            <Col offset={1} span={22}>
               <h1>Property Address</h1>
-              <div>
-                <span
-                  style={{
-                    fontSize: "16px",
-                    marginRight: "8rem",
-                    marginBottom: "1rem"
-                  }}
-                >
-                  Company:{" "}
-                </span>
-                <span style={{ fontSize: "16px" }}>Name: </span>
-              </div>
-              <div>
-                <span
-                  style={{
-                    fontSize: "16px",
-                    marginRight: "8.4rem",
-                    marginBottom: "1rem"
-                  }}
-                >
-                  Address:{" "}
-                </span>
-                <span style={{ fontSize: "16px" }}>City: </span>
-              </div>
-              <div style={{ float: "right", marginTop: "1rem" }}>
-                <Button
-                  type="primary"
-                  icon="edit"
-                  onClick={() => {
-                    // this.setModal2Visible(true)
-                  }}
-                >
-                  Edit
-                </Button>
-              </div>
-            </div>
-          </Col>
-        </Row>
+              <Form layout="vertical" onSubmit={this.handleSubmit}>
+                <Row gutter={24}>
+                  <Col span={10} offset={0}>
+                    <Form.Item label="Company Nmae">
+                      {getFieldDecorator("name", {
+                        rules: [
+                          {
+                            required: true,
+                            message: "Please enter value!"
+                          }
+                        ]
+                      })(<Input disabled={this.state.disabled} placeholder="Enter name here" />)}
+                    </Form.Item>
+                  </Col>
+                  <Col span={1} />
+                  <Col span={10} offset={0}>
+                    <Form.Item label="Address">
+                      {getFieldDecorator("address", {
+                        rules: [
+                          {
+                            required: true,
+                            message: "Please enter value!"
+                          }
+                        ]
+                      })(<Input disabled={this.state.disabled} placeholder="Enter address here" />)}
+                    </Form.Item>
+                  </Col>
+                </Row>
+                <Row gutter={24}>
+                  <Col span={10} offset={0}>
+                    <Form.Item label="Quote Title">
+                      {getFieldDecorator("quote_title", {
+                        rules: [
+                          {
+                            required: true,
+                            message: "Please enter value!"
+                          }
+                        ]
+                      })(<Input disabled={this.state.disabled} placeholder="Enter title here" />)}
+                    </Form.Item>
+                  </Col>
+                  <Col span={1} />
+                  <Col span={10} offset={0}>
+                    <Form.Item label="Reference #">
+                      {getFieldDecorator("description", {
+                        rules: [
+                          {
+                            required: true,
+                            message: "Please enter value!"
+                          }
+                        ]
+                      })(<Input disabled={this.state.disabled} placeholder="Enter description here" />)}
+                    </Form.Item>
+                  </Col>
+                </Row>
+                <Row gutter={24}>
+                  <Col span={10} offset={0}>
+                    <Form.Item label="Notes">
+                      {getFieldDecorator("notes", {
+                        rules: [
+                          {
+                            required: true,
+                            message: "Please enter value!"
+                          }
+                        ]
+                      })(<Input disabled={this.state.disabled} placeholder="Enter detail here" />)}
+                    </Form.Item>
+                  </Col>
+                  <Col span={1} />
+                  <Col span={10} offset={0}>
+                    <Form.Item label="Territory">
+                      {getFieldDecorator("territory", {
+                        rules: [
+                          {
+                            required: true,
+                            message: "Please enter value!"
+                          }
+                        ]
+                      })(<Input disabled={this.state.disabled} placeholder="Enter territory here" />)}
+                    </Form.Item>
+                  </Col>
+                </Row>
+                <div style={{ float: "right", marginTop: "1rem" }}>
+                  {this.state.disabled &&
+                    <Button
+                      type="primary"
+                      icon="edit"
+                      onClick={() => {
+                        // this.setModal2Visible(true)
+                        this.setState({ disabled: false });
+                      }}
+                    >
+                      Edit
+                    </Button>}
+                  {!this.state.disabled &&
+                    <Button
+                      htmlType="submit"
+                      type="primary"
+                      onClick={() => {
+                        // this.setModal2Visible(true)
+                        this.setState({ disabled: false });
+                      }}
+                    >
+                      Save Changes
+                    </Button>}
+                </div>
+              </Form>
+            </Col>
+          </Row>
+        </div>
         <Row>
           <Col span={1} />
           <Col span={22} />
@@ -181,7 +238,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    addQoute: values => dispatch(actions.createQouteRequest(values))
+    addQoute: values => dispatch(actions.createQouteRequest(values)),
+    setValues: values => dispatch(actions.setValuesRequest(values)),
     // dispatch,
   }
 }
