@@ -25,6 +25,16 @@ class Quote extends React.Component {
     console.log(modal2Visible);
     this.setState({ modal2Visible });
   }
+
+  handleSubmit = e => {
+    e.preventDefault();
+    this.props.form.validateFieldsAndScroll((err, values) => {
+      if (!err) {
+        this.props.setValues(values);
+      }
+    });
+  };
+
   render() {
     const { data, form } = this.props;
     const { getFieldDecorator } = form;
@@ -35,7 +45,7 @@ class Quote extends React.Component {
           <Row>
             <Col offset={1} span={22}>
               <h1>Property Address</h1>
-              <Form layout="vertical">
+              <Form layout="vertical" onSubmit={this.handleSubmit}>
                 <Row gutter={24}>
                   <Col span={10} offset={0}>
                     <Form.Item label="Company Nmae">
@@ -46,7 +56,7 @@ class Quote extends React.Component {
                             message: "Please enter value!"
                           }
                         ]
-                      })(<Input disabled={this.state.disabled} />)}
+                      })(<Input disabled={this.state.disabled} placeholder="Enter name here" />)}
                     </Form.Item>
                   </Col>
                   <Col span={1} />
@@ -59,21 +69,21 @@ class Quote extends React.Component {
                             message: "Please enter value!"
                           }
                         ]
-                      })(<Input disabled={this.state.disabled} />)}
+                      })(<Input disabled={this.state.disabled} placeholder="Enter address here" />)}
                     </Form.Item>
                   </Col>
                 </Row>
                 <Row gutter={24}>
                   <Col span={10} offset={0}>
                     <Form.Item label="Quote Title">
-                      {getFieldDecorator("title", {
+                      {getFieldDecorator("quote_title", {
                         rules: [
                           {
                             required: true,
                             message: "Please enter value!"
                           }
                         ]
-                      })(<Input disabled={this.state.disabled} />)}
+                      })(<Input disabled={this.state.disabled} placeholder="Enter title here" />)}
                     </Form.Item>
                   </Col>
                   <Col span={1} />
@@ -86,7 +96,7 @@ class Quote extends React.Component {
                             message: "Please enter value!"
                           }
                         ]
-                      })(<Input disabled={this.state.disabled} />)}
+                      })(<Input disabled={this.state.disabled} placeholder="Enter description here" />)}
                     </Form.Item>
                   </Col>
                 </Row>
@@ -100,7 +110,7 @@ class Quote extends React.Component {
                             message: "Please enter value!"
                           }
                         ]
-                      })(<Input disabled={this.state.disabled} />)}
+                      })(<Input disabled={this.state.disabled} placeholder="Enter detail here" />)}
                     </Form.Item>
                   </Col>
                   <Col span={1} />
@@ -113,21 +123,33 @@ class Quote extends React.Component {
                             message: "Please enter value!"
                           }
                         ]
-                      })(<Input disabled={this.state.disabled} />)}
+                      })(<Input disabled={this.state.disabled} placeholder="Enter territory here" />)}
                     </Form.Item>
                   </Col>
                 </Row>
                 <div style={{ float: "right", marginTop: "1rem" }}>
-                  <Button
-                    type="primary"
-                    icon="edit"
-                    onClick={() => {
-                      // this.setModal2Visible(true)
-                      this.setState({ disabled: false })
-                    }}
-                  >
-                    {this.state.disabled ? 'Edit' : 'Save Changes'}
-                  </Button>
+                  {this.state.disabled &&
+                    <Button
+                      type="primary"
+                      icon="edit"
+                      onClick={() => {
+                        // this.setModal2Visible(true)
+                        this.setState({ disabled: false });
+                      }}
+                    >
+                      Edit
+                    </Button>}
+                  {!this.state.disabled &&
+                    <Button
+                      htmlType="submit"
+                      type="primary"
+                      onClick={() => {
+                        // this.setModal2Visible(true)
+                        this.setState({ disabled: false });
+                      }}
+                    >
+                      Save Changes
+                    </Button>}
                 </div>
               </Form>
             </Col>
@@ -216,7 +238,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    addQoute: values => dispatch(actions.createQouteRequest(values))
+    addQoute: values => dispatch(actions.createQouteRequest(values)),
+    setValues: values => dispatch(actions.setValuesRequest(values)),
     // dispatch,
   }
 }
