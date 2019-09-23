@@ -1,8 +1,8 @@
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 import React, { Component } from "react";
 import { Row, Col, Form, Input, Button } from "antd";
 
-import * as actions from '../../actions/price-action';
+import * as actions from "../../actions/price-action";
 
 const formItemLayout = {
   labelCol: {
@@ -16,10 +16,28 @@ const formItemLayout = {
 };
 
 class ManagePrice extends Component {
+  state = {
+    perSquare: 0,
+    avila: 0,
+    deco: 0,
+    hardwire: 0,
+    lilon: 0,
+    manual: 0,
+    motor: 0,
+    single: 0,
+    duel: 0
+  };
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.getPrice();
   }
+
+  componentDidMount() {
+    const { data } = this.props.price;
+    this.initializeState(data);
+  }
+
+  componentWillReceiveProps() {}
 
   handleSubmit = e => {
     e.preventDefault();
@@ -30,10 +48,24 @@ class ManagePrice extends Component {
     });
   };
 
+  initializeState = data => {
+    this.props.form.setFieldsValue({
+      avila: data.fabrics && data.fabrics.avila,
+      deco: data.fabrics && data.fabrics.deco,
+      hardwire: data.motorType && data.motorType.hardwire,
+      lilon: data.motorType && data.motorType.lilon,
+      single: data.type && data.type.single,
+      duel: data.type && data.type.duel,
+      manual: data.shade && data.shade.manual,
+      motor: data.shade && data.shade.motor,
+      perSquare: data.dimension && data.dimension.perSquare
+    });
+  };
+
   render() {
     const { form, price } = this.props;
-    console.log(price, '0-0-0-0-0-0-0');
     const { getFieldDecorator } = form;
+
     return (
       <div>
         <Form
@@ -51,12 +83,10 @@ class ManagePrice extends Component {
                   rules: [
                     {
                       required: true,
-                      message: 'Enter price'
-                    },
-                  ],
-                })(
-                  <Input type="number" style={{ width: 200 }} />
-                )}
+                      message: "Enter price"
+                    }
+                  ]
+                })(<Input type="number" style={{ width: 200 }} />)}
               </Form.Item>
             </Col>
             <Col xs={12} span={12}>
@@ -65,12 +95,10 @@ class ManagePrice extends Component {
                   rules: [
                     {
                       required: true,
-                      message: 'Enter price'
-                    },
-                  ],
-                })(
-                  <Input type="number" style={{ width: 200 }} />
-                )}
+                      message: "Enter price"
+                    }
+                  ]
+                })(<Input type="number" style={{ width: 200 }} />)}
               </Form.Item>
             </Col>
           </Row>
@@ -84,12 +112,10 @@ class ManagePrice extends Component {
                   rules: [
                     {
                       required: true,
-                      message: 'Enter price'
-                    },
-                  ],
-                })(
-                  <Input type="number" style={{ width: 200 }} />
-                )}
+                      message: "Enter price"
+                    }
+                  ]
+                })(<Input type="number" style={{ width: 200 }} />)}
               </Form.Item>
             </Col>
             <Col xs={12} span={12}>
@@ -98,12 +124,10 @@ class ManagePrice extends Component {
                   rules: [
                     {
                       required: true,
-                      message: 'Enter price'
-                    },
-                  ],
-                })(
-                  <Input type="number" style={{ width: 200 }} />
-                )}
+                      message: "Enter price"
+                    }
+                  ]
+                })(<Input type="number" style={{ width: 200 }} />)}
               </Form.Item>
             </Col>
           </Row>
@@ -117,12 +141,10 @@ class ManagePrice extends Component {
                   rules: [
                     {
                       required: true,
-                      message: 'Enter price'
-                    },
-                  ],
-                })(
-                  <Input type="number" style={{ width: 200 }} />
-                )}
+                      message: "Enter price"
+                    }
+                  ]
+                })(<Input type="number" style={{ width: 200 }} />)}
               </Form.Item>
             </Col>
             <Col xs={12} span={12}>
@@ -131,12 +153,10 @@ class ManagePrice extends Component {
                   rules: [
                     {
                       required: true,
-                      message: 'Enter price'
-                    },
-                  ],
-                })(
-                  <Input type="number" style={{ width: 200 }} />
-                )}
+                      message: "Enter price"
+                    }
+                  ]
+                })(<Input type="number" style={{ width: 200 }} />)}
               </Form.Item>
             </Col>
           </Row>
@@ -150,12 +170,10 @@ class ManagePrice extends Component {
                   rules: [
                     {
                       required: true,
-                      message: 'Enter price'
-                    },
-                  ],
-                })(
-                  <Input type="number" style={{ width: 200 }} />
-                )}
+                      message: "Enter price"
+                    }
+                  ]
+                })(<Input type="number" style={{ width: 200 }} />)}
               </Form.Item>
             </Col>
             <Col xs={12} span={12}>
@@ -164,12 +182,10 @@ class ManagePrice extends Component {
                   rules: [
                     {
                       required: true,
-                      message: 'Enter price'
-                    },
-                  ],
-                })(
-                  <Input type="number" style={{ width: 200 }} />
-                )}
+                      message: "Enter price"
+                    }
+                  ]
+                })(<Input type="number" style={{ width: 200 }} />)}
               </Form.Item>
             </Col>
           </Row>
@@ -183,12 +199,10 @@ class ManagePrice extends Component {
                   rules: [
                     {
                       required: true,
-                      message: 'Enter price'
-                    },
-                  ],
-                })(
-                  <Input type="number" style={{ width: 200 }} />
-                )}
+                      message: "Enter price"
+                    }
+                  ]
+                })(<Input type="number" style={{ width: 200 }} />)}
               </Form.Item>
             </Col>
           </Row>
@@ -197,7 +211,7 @@ class ManagePrice extends Component {
             <Col xs={12} span={12}>
               <Button type="primary" htmlType="submit">
                 Create
-							</Button>
+              </Button>
             </Col>
             <Col span={12} />
           </Row>
@@ -216,10 +230,10 @@ const mapDispatchToProps = dispatch => {
   return {
     setPrice: data => dispatch(actions.setPriceRequest(data)),
     getPrice: () => dispatch(actions.getPriceRequest())
-  }
-}
+  };
+};
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(WrappedQuoteForm);
