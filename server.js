@@ -21,14 +21,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 //User Routes
-app.use("/users", users);
+app.use("/api/users", users);
 
 //Quote Routes
-app.use("/quotes", quotes);
+app.use("/api/quotes", quotes);
 //Price Routes
-app.use("/prices", prices);
+app.use("/api/prices", prices);
 //Quote Details Routes
-app.use("/quote-detail", quoteDetail);
+app.use("/api/quote-detail", quoteDetail);
 
 //DB config
 const db = require("./config/keys").mongoURI;
