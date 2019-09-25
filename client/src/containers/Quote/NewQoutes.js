@@ -16,7 +16,7 @@ import "./styles.css";
 import { ASelect, AInput } from '../../inputTypes';
 import * as actions from "../../actions/create-qoute";
 
-import { Field, reduxForm, getFormValues } from 'redux-form';
+import { Field, reduxForm, getFormValues, reset as clearValues } from 'redux-form';
 import * as priceaction from "../../actions/price-action";
 
 class NewQoutes extends Component {
@@ -49,35 +49,35 @@ class NewQoutes extends Component {
     console.log(data, 'price data');
     let total = 0;
     formValues && Object.entries(formValues).forEach(([key, value]) => {
-      if(key === 'shade_type' && value === 'Motorize') {
+      if (key === 'shade_type' && value === 'Manual') {
         total = total + data.shade.manual
-      } else {
+      } else if (key === 'shade_type' && value === 'Motorize') {
         total = total + data.shade.motor
       }
-      
-      if(key === 'single_or_double_shade' && value === 'single') {
+
+      if (key === 'single_or_double_shade' && value === 'Single') {
         total = total + data.type.single
-      } else {
-        total = total + data.type.dual
+      } else if (key === 'single_or_double_shade' && value === 'Duel') {
+        total = total + data.type.duel
       }
-      
-      if(key === 'motor') {
-        total = total + data.motor.hardwire
+
+      if (key === 'motor') {
+        total = total + data.motorType.hardwire
       }
-      
-      if(key === 'fabrics' && value === 'manual') {
+
+      if (key === 'fabrics' && value === 'manual') {
         total = total + data.fabrics.avila
-      } else {
+      } else if (key === 'fabrics' && value === 'auto') {
         total = total + data.fabrics.deco
       }
-      
-      if(key=== 'roll_direction') {
+
+      if (key === 'roll_direction') {
         total = total + data.dimension.perSquare
       }
     });
 
     console.log(total, 'total');
-    total > 0 && this.setState({ price: total });
+    this.setState({ price: total });
   }
 
   handleSubmit = e => {
@@ -106,7 +106,7 @@ class NewQoutes extends Component {
       values.push(val)
       price = price + val;
     }
-    this.setState({ price: price, values: values })
+    // this.setState({ price: price, values: values })
   }
 
   handleMotor = (value) => {
@@ -659,7 +659,7 @@ class NewQoutes extends Component {
                 )}
               <Button
                 onClick={() => {
-                  // this.handleshowPrice();
+                  this.handleshowPrice();
                   this.calculatePrice();
                 }}
                 style={{ marginRight: 8 }}
@@ -669,7 +669,11 @@ class NewQoutes extends Component {
               <Button type="primary" htmlType="submit">
                 Create
                   </Button>
-              <Button style={{ marginLeft: 8 }} onClick={this.handleReset}>
+              <Button style={{ marginLeft: 8 }} onClick={() => {
+                this.props.reset();
+                this.setState({ showPrice: false });
+              }}
+              >
                 Clear
                   </Button>
               <Button
@@ -694,7 +698,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
   return {
     // addQoute: values => dispatch(actions.createQouteRequest(values))
-    getPrice: () => dispatch(priceaction.getPriceRequest())
+    getPrice: () => dispatch(priceaction.getPriceRequest()),
+    reset: () => dispatch(clearValues('CreateQuoteForm'))
   }
 }
 
