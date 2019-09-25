@@ -6,7 +6,6 @@ import {
   Col,
   Button,
   Form,
-  Input,
   Select,
   Modal,
   Divider,
@@ -17,7 +16,7 @@ import "./styles.css";
 import { ASelect, AInput } from '../../inputTypes';
 import * as actions from "../../actions/create-qoute";
 
-import { Field, reduxForm, getFormValues } from 'redux-form';
+import { Field, reduxForm, getFormValues, reset as clearValues } from 'redux-form';
 import * as priceaction from "../../actions/price-action";
 
 class NewQoutes extends Component {
@@ -43,6 +42,42 @@ class NewQoutes extends Component {
 
   handleChange(value) {
     console.log(`selected ${value}`);
+  }
+
+  calculatePrice = () => {
+    const { formValues, price: { data } } = this.props;
+    console.log(data, 'price data');
+    let total = 0;
+    formValues && Object.entries(formValues).forEach(([key, value]) => {
+      if (key === 'shade_type' && value === 'Manual') {
+        total = total + data.shade.manual
+      } else if (key === 'shade_type' && value === 'Motorize') {
+        total = total + data.shade.motor
+      }
+
+      if (key === 'single_or_double_shade' && value === 'Single') {
+        total = total + data.type.single
+      } else if (key === 'single_or_double_shade' && value === 'Duel') {
+        total = total + data.type.duel
+      }
+
+      if (key === 'motor') {
+        total = total + data.motorType.hardwire
+      }
+
+      if (key === 'fabrics' && value === 'manual') {
+        total = total + data.fabrics.avila
+      } else if (key === 'fabrics' && value === 'auto') {
+        total = total + data.fabrics.deco
+      }
+
+      if (key === 'roll_direction') {
+        total = total + data.dimension.perSquare
+      }
+    });
+
+    console.log(total, 'total');
+    this.setState({ price: total });
   }
 
   handleSubmit = e => {
@@ -71,7 +106,7 @@ class NewQoutes extends Component {
       values.push(val)
       price = price + val;
     }
-    this.setState({ price: price, values: values })
+    // this.setState({ price: price, values: values })
   }
 
   handleMotor = (value) => {
@@ -83,11 +118,10 @@ class NewQoutes extends Component {
   }
 
   render() {
-    const { form } = this.props;
-    const { getFieldDecorator } = form;
-    const { Option, OptGroup } = Select;
+    const { formValues } = this.props;
+    const { Option } = Select;
     const { data } = this.props.price;
-    console.log("_P_P_P_P_P_P", data)
+    console.log("_P_P_P_P_P_P", formValues)
     return (
       <Modal
         centered
@@ -397,12 +431,12 @@ class NewQoutes extends Component {
                   -
                  </Option>
                 <Option
-                  value="Manual"
+                  value="manual"
                   onClick={() => this.setPrice(38)}
                 >
                   Manual
                 </Option>
-                <Option value="Motorize">Motorize</Option>
+                <Option value="auto">Motorize</Option>
               </Field>
             </Col>
             <Col span={8} />
@@ -624,7 +658,10 @@ class NewQoutes extends Component {
                   ""
                 )}
               <Button
-                onClick={this.handleshowPrice}
+                onClick={() => {
+                  this.handleshowPrice();
+                  this.calculatePrice();
+                }}
                 style={{ marginRight: 8 }}
               >
                 Estimate Price
@@ -632,7 +669,11 @@ class NewQoutes extends Component {
               <Button type="primary" htmlType="submit">
                 Create
                   </Button>
-              <Button style={{ marginLeft: 8 }} onClick={this.handleReset}>
+              <Button style={{ marginLeft: 8 }} onClick={() => {
+                this.props.reset();
+                this.setState({ showPrice: false });
+              }}
+              >
                 Clear
                   </Button>
               <Button
@@ -650,18 +691,20 @@ class NewQoutes extends Component {
 }
 
 const mapStateToProps = state => ({
-  price: state.price
+  price: state.price,
+  formValues: getFormValues("CreateQuoteForm")(state)
 });
 
 const mapDispatchToProps = dispatch => {
   return {
     // addQoute: values => dispatch(actions.createQouteRequest(values))
-    getPrice: () => dispatch(priceaction.getPriceRequest())
+    getPrice: () => dispatch(priceaction.getPriceRequest()),
+    reset: () => dispatch(clearValues('CreateQuoteForm'))
   }
 }
 
 const WrappedQuoteForm = reduxForm({
-  form: 'CarrierInfoForm',
+  form: 'CreateQuoteForm',
   // validate,
 })(NewQoutes);
 
