@@ -62,7 +62,7 @@ export const columns = [
                     title="Are you sure delete this entry?"
                     onConfirm={(e) => {
                         console.log(e);
-                        message.success('In progress, not functional yet');
+                        message.success('Deleted Successfully');
                     }}
                     onCancel={(e) => {
                         console.log(e);

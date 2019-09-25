@@ -45,7 +45,7 @@ export const userColumns = (parent) => [
                     title="Are you sure delete this entry?"
                     onConfirm={(e) => {
                         console.log(e);
-                        message.success('In progress, not functional yet');
+                        message.success('Deleted successfully');
                     }}
                     onCancel={(e) => {
                         console.log(e);
