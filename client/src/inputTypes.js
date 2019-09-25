@@ -86,14 +86,14 @@ const makeSelectField = Component => ({
 }) => {
     /* eslint-disable no-param-reassign */
     if (input.value !== 0 && !input.value) {
-        input.value = undefined;
+        input.value = rest.placeholder ? rest.placeholder: '' ;
     }
     const hasError = meta.touched && meta.invalid;
     return (
         <FormItem
             label={label}
             validateStatus={hasError ? 'error' : 'success'}
-            // hasFeedback={hasFeedback && hasError}
+            hasFeedback={hasFeedback && hasError}
             help={hasError && meta.error}
             style={{
                 marginBottom: 0,
@@ -105,8 +105,8 @@ const makeSelectField = Component => ({
                 style={{
                     color:
                         (!input.value && input.value !== 0) || rest.disabled
-                            ? '#5a5a5a'
-                            : 'white',
+                            ? '#000'
+                            : '#000',
                 }}
             >
                 {children}

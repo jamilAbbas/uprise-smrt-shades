@@ -6,7 +6,6 @@ import {
   Col,
   Button,
   Form,
-  Input,
   Select,
   Modal,
   Divider,
@@ -43,6 +42,42 @@ class NewQoutes extends Component {
 
   handleChange(value) {
     console.log(`selected ${value}`);
+  }
+
+  calculatePrice = () => {
+    const { formValues, price: { data } } = this.props;
+    console.log(data, 'price data');
+    let total = 0;
+    formValues && Object.entries(formValues).forEach(([key, value]) => {
+      if(key === 'shade_type' && value === 'Motorize') {
+        total = total + data.shade.manual
+      } else {
+        total = total + data.shade.motor
+      }
+      
+      if(key === 'single_or_double_shade' && value === 'single') {
+        total = total + data.type.single
+      } else {
+        total = total + data.type.dual
+      }
+      
+      if(key === 'motor') {
+        total = total + data.motor.hardwire
+      }
+      
+      if(key === 'fabrics' && value === 'manual') {
+        total = total + data.fabrics.avila
+      } else {
+        total = total + data.fabrics.deco
+      }
+      
+      if(key=== 'roll_direction') {
+        total = total + data.dimension.perSquare
+      }
+    });
+
+    console.log(total, 'total');
+    total > 0 && this.setState({ price: total });
   }
 
   handleSubmit = e => {
@@ -83,11 +118,10 @@ class NewQoutes extends Component {
   }
 
   render() {
-    const { form } = this.props;
-    const { getFieldDecorator } = form;
-    const { Option, OptGroup } = Select;
+    const { formValues } = this.props;
+    const { Option } = Select;
     const { data } = this.props.price;
-    console.log("_P_P_P_P_P_P", data)
+    console.log("_P_P_P_P_P_P", formValues)
     return (
       <Modal
         centered
@@ -397,12 +431,12 @@ class NewQoutes extends Component {
                   -
                  </Option>
                 <Option
-                  value="Manual"
+                  value="manual"
                   onClick={() => this.setPrice(38)}
                 >
                   Manual
                 </Option>
-                <Option value="Motorize">Motorize</Option>
+                <Option value="auto">Motorize</Option>
               </Field>
             </Col>
             <Col span={8} />
@@ -624,7 +658,10 @@ class NewQoutes extends Component {
                   ""
                 )}
               <Button
-                onClick={this.handleshowPrice}
+                onClick={() => {
+                  // this.handleshowPrice();
+                  this.calculatePrice();
+                }}
                 style={{ marginRight: 8 }}
               >
                 Estimate Price
@@ -650,7 +687,8 @@ class NewQoutes extends Component {
 }
 
 const mapStateToProps = state => ({
-  price: state.price
+  price: state.price,
+  formValues: getFormValues("CreateQuoteForm")(state)
 });
 
 const mapDispatchToProps = dispatch => {
@@ -661,7 +699,7 @@ const mapDispatchToProps = dispatch => {
 }
 
 const WrappedQuoteForm = reduxForm({
-  form: 'CarrierInfoForm',
+  form: 'CreateQuoteForm',
   // validate,
 })(NewQoutes);
 
