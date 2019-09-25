@@ -85,8 +85,8 @@ function* workerFetchUserQoutes(action) {
 function* workerCreateQoute(action) {
   try {
     const response = yield axios.post(`/quotes/create`, action.values);
-    yield put(userQoutes.createQouteSuccess(response.data));
     message.success("Qoutes created successfully!");
+    yield put(userQoutes.createQouteSuccess(response.data));
   } catch (error) {
     message.error("Error while creating qoutes!");
     yield put(userQoutes.createQouteError(error.message));

@@ -80,20 +80,14 @@ class NewQoutes extends Component {
     this.setState({ price: total });
   }
 
-  handleSubmit = e => {
-    e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err, values) => {
-      if (!err) {
-        this.props.addQoute(values);
-        this.props.form.resetFields();
-        this.props.setModal2Visible(false);
-      }
-    });
+  onSubmit = values => {
+    if (values && Object.keys(values).length > 0) {
+      this.props.addQoute(values);
+      this.props.reset();
+      this.props.setModal2Visible(false);
+    }
   };
 
-  handleReset = () => {
-    this.props.form.resetFields();
-  };
   handleshowPrice = () => {
     this.setState({ showPrice: true })
   }
@@ -118,7 +112,7 @@ class NewQoutes extends Component {
   }
 
   render() {
-    const { formValues } = this.props;
+    const { formValues, handleSubmit } = this.props;
     const { Option } = Select;
     const { data } = this.props.price;
     console.log("_P_P_P_P_P_P", formValues)
@@ -137,7 +131,7 @@ class NewQoutes extends Component {
       >
         <Form
           className="ant-advanced-search-form"
-          onSubmit={this.handleSubmit}
+          onSubmit={handleSubmit(this.onSubmit)}
         >
           <Row gutter={24} style={{ textAlign: "center" }}>
             <h3>New Shades</h3>

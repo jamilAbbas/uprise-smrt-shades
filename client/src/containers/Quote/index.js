@@ -182,7 +182,7 @@ class Quote extends React.Component {
                   Excel
                 </Button>
               </div>
-              <div style={{ float: "right" }}>
+              {/* <div style={{ float: "right" }}>
                 <Button
                   type="success"
                   icon="copy"
@@ -190,7 +190,7 @@ class Quote extends React.Component {
                 >
                   Duplicate
                 </Button>
-              </div>
+              </div> */}
             </div>
 
             <Table
